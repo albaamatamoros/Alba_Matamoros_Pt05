@@ -202,3 +202,60 @@ a.desactivado {
     background-color: #f4f4f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
 }
+
+/* SEARCH BAR */
+
+/* Contenedor para centrar la barra de búsqueda */
+.search-bar-container {
+    text-align: center;
+    margin: 15px 0;
+}
+
+/* Estilo del formulario de búsqueda */
+.search-form {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo del campo de entrada */
+.search-input {
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    width: 200px;
+    transition: width 0.3s ease;
+}
+
+/* Cambio de tamaño del campo de entrada al hacer foco */
+.search-input:focus {
+    width: 250px;
+}
+
+/* Estilo del botón de búsqueda */
+.search-button {
+    background-color: #383b38; /* Usa el color de tus botones */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 0 5px 5px 0;
+    transition: background-color 0.3s;
+}
+
+/* Efecto hover en el botón de búsqueda */
+.search-button:hover {
+    background-color: #45a049;
+}
+
+/* Ajuste de color de fondo y texto del input al hacer hover */
+.search-input:hover {
+    background-color: #f0f0f0;
+}
+

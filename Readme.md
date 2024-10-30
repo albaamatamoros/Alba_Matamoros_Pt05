@@ -1,5 +1,5 @@
 <!-- Alba Matamoros Morales -->
-# Pràctica 04 - Inici d'usuaris i registre de sessions
+# Pràctica 05 - Social Authentication & Miscel·lània
 Si vols fer proves amb usuaris ja creats tots tenen el pasword = P@ssw0rd
 
 La temàtica de la meva pàgina és "Personatges de One piece", els usuaris han d'introduir tots els personatges existents actualment, cada usuari fa la seva aportació sense repetir l'usuari inserit per altra persona.

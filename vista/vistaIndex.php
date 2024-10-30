@@ -13,15 +13,17 @@
     <!-- Alba Matamoros Morales -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ESTILS -->
     <link rel="stylesheet" href="estils/estilBarra.css">
     <link rel="stylesheet" href="estils/estilMostrar.css">
-    
     <title>Inici</title>
+    <!-- Script confirmació esborrar personatges -->
     <script>
         function confirmarEsborrar(idPersonatge) {
             let confirmacion = confirm("Segur que vols esborrar aquest personatge?");
             
             if (confirmacion) {
+                // Redirigeix + id personatge.
                 window.location.href = './controlador/controladorEsborrarIndex.php?id_personatge=' + idPersonatge;
             }
         }
@@ -32,6 +34,7 @@
         <!-- INICI y GESTIÓ D'ARTICLES -->
         <div class="left">
         <a href="index.php">INICI</a>
+            <!-- Botó activat amb l'inici de sessió fet "GESTIÓ DE PERSONATGES" -->
             <?php if(isset($_SESSION["loginId"])) {
                 echo ' <a href="vista/vistaMenu.php">GESTIÓ DE PERSONATGES</a> ';
             } ?>
@@ -39,6 +42,7 @@
 
         <!-- PERFIL -->
         <div class="perfil">
+            <!-- Botons de perfil -->
             <?php if (!isset($_SESSION['loginId'])): ?>
                 <a>PERFIL</a>
                 <div class="dropdown-content">
@@ -58,11 +62,15 @@
         </div>
     </nav>
 
+    <!------------------------->
     <!-- MOSTRAR PERSONATGES -->
+    <!------------------------->
     <section>
         <?php if (!isset($_SESSION['loginId'])): ?>
 
+            <!------------------------->
             <!-- PERSONATGES GLOBALS -->
+            <!------------------------->
             <!-- Tornem la consulta amb tots els peronatges globals -->
 
             <div class="selectPersonatge">
@@ -77,8 +85,22 @@
                 </form>
             </div>
 
-            <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges Global</h1> </div>
+            <!-- Titulo -->
+            <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges Global</h1></div>
+            
+            <!---------------->
+            <!-- SEARCH BAR -->
+            <!---------------->
+            <div class="search-bar-container">
+                <form action="../controlador/controladorSearchBar.php" method="GET" class="search-form">
+                    <input type="search" name="query" placeholder="Cerca..." aria-label="Cerca" class="search-input" />
+                    <button type="submit" class="search-button">🔍</button>
+                </form>
+            </div>
+
+
             <div class="personatges-container">
+                <!-- Paginación Global -->
                 <?php echo paginacioGlobal(isset($_GET["pagina"]) ? $_GET["pagina"] : PAGINA); ?>
             </div>
 
@@ -86,12 +108,18 @@
             <!-- Cridem a la funció que fa els càlculs i configura la paginació. -->
             <section class="paginacio">
             <div class="pagination">
+                <!-- Global -->
                 <?php echo retornarLinksGlobal(isset($_GET["pagina"]) ? $_GET["pagina"] : PAGINA); ?>
             </div>
             </section>
 
         <?php else: ?>
-            
+
+            <!------------------------>
+            <!-- PERSONATGES USUARI -->
+            <!------------------------>
+            <!-- Cookies per recordar les preferencies d'usuari a l'hora de mostrar x personatges per pantalla -->
+             
             <div class="selectPersonatge">
                 <form action="" method="POST">
                     <select name="select" onchange="this.form.submit()">
