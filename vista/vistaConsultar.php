@@ -5,7 +5,7 @@
     } else if (!isset($_COOKIE['personatgesCookie'])) {
         setcookie("personatgesCookie", 5 , 0);
     }
-    require_once '../controlador/controladorPaginacioConsultarMenu.php';
+    require_once '../controlador/controladorPaginacio.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,31 +48,47 @@
 
     <!-- MOSTRAR PERSONATGES -->
     <section>
+        <!------------------------->
+            <!-- PERSONATGES GLOBALS -->
+            <!------------------------->
+            <!-- Tornem la consulta amb tots els peronatges globals -->
 
-        <div class="selectPersonatge">
-            <form action="" method="POST">
-                <select name="select" onchange="this.form.submit()">
-                <?php foreach([5, 10, 15, 20] as $num): ?>
-                    <option value="<?php echo $num; ?>" <?php if (isset($_COOKIE['personatgesCookie']) && $_COOKIE['personatgesCookie'] == $num) echo 'selected'; ?>>
-                        <?php echo $num; ?>
-                    </option>
-                <?php endforeach; ?>
-                </select>
-            </form>
-        </div>
+            <div class="selectPersonatge">
+                <form action="" method="POST">
+                    <select name="select" onchange="this.form.submit()">
+                    <?php foreach([5, 10, 15, 20] as $num): ?>
+                        <option value="<?php echo $num; ?>" <?php if (isset($_COOKIE['personatgesCookie']) && $_COOKIE['personatgesCookie'] == $num) echo 'selected'; ?>>
+                            <?php echo $num; ?>
+                        </option>
+                    <?php endforeach; ?>
+                    </select>
+                </form>
+            </div>
 
-        <!-- PERSONATGES GLOBALS -->
-        <!-- Tornem la consulta amb tots els peronatges globals -->
-        <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges Global</h1> </div>
+            <!-- Titulo -->
+            <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges Global</h1></div>
+            
+            <!---------------->
+            <!-- SEARCH BAR -->
+            <!---------------->
+            <div class="search-bar-container">
+                <form action="../controlador/controladorSearchBar.php" method="GET" class="search-form">
+                    <input type="search" name="query" placeholder="Cerca..." aria-label="Cerca" class="search-input" />
+                    <button type="submit" class="search-button">🔍</button>
+                </form>
+            </div>
+
             <div class="personatges-container">
-                <?php echo paginacioGlobalConsultar(isset($_GET["pagina"]) ? $_GET["pagina"] : PAGINA); ?>
+                <!-- Paginación Global -->
+                <?php echo paginacioGlobal(); ?>
             </div>
 
             <!-- PAGINACIÓ GLOBAL -->
             <!-- Cridem a la funció que fa els càlculs i configura la paginació. -->
             <section class="paginacio">
             <div class="pagination">
-                <?php echo retornarLinksConsultar(isset($_GET["pagina"]) ? $_GET["pagina"] : PAGINA); ?>
+                <!-- Global -->
+                <?php echo retornarLinksGlobal(); ?>
             </div>
             </section>
     </section>

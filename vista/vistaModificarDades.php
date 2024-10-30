@@ -15,6 +15,8 @@
             session_start();
         }
         if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" );}
+
+        require_once "../controlador/controladorModificarDades.php";
     ?>
     <body>
         <nav>
@@ -39,13 +41,10 @@
         </nav>
 
         <!-- Agafem l'id del personatge per GET, desde index.php o vistaModificar.php -->
-        <?php 
-            require_once "../model/modelPersonatges.php";
-
+        <?php
             if (isset($_GET["id_personatge"])) {
-                $personatgeId = $_GET["id_personatge"];
-                $personatgeBD = selectPersonatgePerId($personatgeId);
-        
+                $personatgeBD = dadesPersonatge($_GET["id_personatge"]);
+    
                 if (empty($personatgeBD)) {
                     $errors[] = "No s'han trobat dades per a aquest personatge.";
                 }
@@ -83,7 +82,7 @@
                     </div>
                 <?php endif; ?>                
                 <!-- Amb un input invisible pasem l'id a controlador -->
-                <input type="hidden" name="id" value="<?php echo isset($personatgeId) ? $personatgeId : ''; ?>"/>
+                <input type="hidden" name="id" value="<?php echo isset($_GET["id_personatge"]) ? $_GET["id_personatge"] : ''; ?>"/>
 
                 <!-- MODIFICAR -->
                 <div class="button-group">

@@ -52,4 +52,10 @@
             echo "Error: " . $e->getMessage();
         }
     }
+
+    //Recuperar les dades.
+    function dadesPersonatge($idPersonatge){
+        $personatgeBD = selectPersonatgePerId($idPersonatge);
+        return $personatgeBD;
+    }
 ?>

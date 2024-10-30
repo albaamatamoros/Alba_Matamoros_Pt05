@@ -20,7 +20,7 @@
         <nav>
             <!-- INICI y GESTIÓ D'ARTICLES -->
             <div class="left">
-                <a href='../index.php'">INICI</a>
+                <a href='../index.php'>INICI</a>
                 <a href="../vista/vistaMenu.php">GESTIÓ DE PERSONATGES</a>
             </div>
 

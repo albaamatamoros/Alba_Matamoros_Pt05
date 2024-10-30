@@ -24,7 +24,7 @@
             
             if (confirmacion) {
                 // Redirigeix + id personatge.
-                window.location.href = './controlador/controladorEsborrarIndex.php?id_personatge=' + idPersonatge;
+                window.location.href = './controlador/controladorEsborrar.php?id_personatge=' + idPersonatge;
             }
         }
     </script>
@@ -98,10 +98,9 @@
                 </form>
             </div>
 
-
             <div class="personatges-container">
                 <!-- Paginación Global -->
-                <?php echo paginacioGlobal(isset($_GET["pagina"]) ? $_GET["pagina"] : PAGINA); ?>
+                <?php echo paginacioGlobal(); ?>
             </div>
 
             <!-- PAGINACIÓ GLOBAL -->
@@ -109,7 +108,7 @@
             <section class="paginacio">
             <div class="pagination">
                 <!-- Global -->
-                <?php echo retornarLinksGlobal(isset($_GET["pagina"]) ? $_GET["pagina"] : PAGINA); ?>
+                <?php echo retornarLinksGlobal(); ?>
             </div>
             </section>
 
@@ -135,7 +134,7 @@
             <!-- PERSONATGES USUARI -->
             <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges</h1> </div>
                 <div class="personatges-container">
-                    <?php echo paginacioPerUsuari(isset($_GET["pagina"]) ? $_GET["pagina"] : PAGINA); ?>
+                    <?php echo paginacioPerUsuari(); ?>
                 </div>
 
             <!-- PAGINACIÓ PER USUARI -->
@@ -143,7 +142,7 @@
             <section class="paginacio">
             <div class="pagination">
                 <!-- Tornem la consulta amb tots els peronatges globals -->
-                <?php echo retornarLinksPerUsuari(isset($_GET["pagina"]) ? $_GET["pagina"] : PAGINA); ?>
+                <?php echo retornarLinksPerUsuari(); ?>
             </div>
             </section>
         <?php endif; ?>

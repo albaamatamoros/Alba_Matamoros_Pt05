@@ -45,5 +45,13 @@
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
+    } elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
+        if (isset($_GET['id_personatge'])) {
+            $idPersonatge = $_GET['id_personatge'];
+        
+            esborrarPerId($idPersonatge);
+        
+            header("Location: ../index.php?pagina=1");
+        }
     }
 ?>
