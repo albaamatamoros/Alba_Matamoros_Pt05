@@ -17,6 +17,7 @@
 
         try {
             if ($accion == "Modificar") {
+                $usuariId = $_SESSION["loginId"];
                 $nom = htmlspecialchars($_POST["nom"]);
                 $text = htmlspecialchars($_POST["text"]);
                 $personatgeId = htmlspecialchars($_POST["id"]);
@@ -35,7 +36,11 @@
                         if (empty($nom)) $errors = "➤ El camp nom no pot ser buit";
                         if (empty($text)) $errors = "➤ El camp descripcio no pot ser buit";
                     }
-                    //Comprovem si s'ha generat algun error en el proces, sino s'envia un missatge dient que esta tot correcte. 
+                    //Comprovar si el personatge es del usuari.
+                    $creat = selectComprovarUsuariId($nom, $usuariId);
+                    if ($creat == false){
+                        $errors[] = "➤ No pots modificar un personatge que no es teu.";
+                    }
                     if (empty($errors)){
                         modificar($nom, $text, $personatgeId);
                         $correcte = "Personatge modificat correctament!";

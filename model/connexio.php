@@ -1,13 +1,13 @@
 <?php
 //Alba Matamoros Morales
-
+require_once "./env.php";
 //CONNEXIO
     function connexio(){
     //Dades connexio a BD.
-    $host = "localhost";
-    $nomBD = "pt04_alba_matamoros";
-    $usuari = "root";
-    $contra = "";
+    $host = DB_HOST;
+    $nomBD = DB_NAME;
+    $usuari = DB_USER;
+    $contra = DB_PASS;
 
     //Connexió.
     try {
