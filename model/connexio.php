@@ -1,6 +1,6 @@
 <?php
 //Alba Matamoros Morales
-require_once "./env.php";
+require_once __DIR__ . '/../env.php';
 //CONNEXIO
     function connexio(){
     //Dades connexio a BD.

@@ -1,6 +1,8 @@
 <?php
     //Alba Matamoros Morales
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }    
     //Array d'errors.
     $errors = [];
     //Comprovar l'exsistencia d'un usuari.
