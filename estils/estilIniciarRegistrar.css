@@ -88,4 +88,28 @@ body {
     text-decoration: underline;
 }
 
+/* Estilo para el botón de cambiar contraseña */
+.container-button {
+    display: flex;
+    justify-content: center; /* Alinea el contenido horizontalmente */
+    align-items: center; /* Alinea el contenido verticalmente */
+}
 
+.buttons{
+    margin-bottom: 10px;
+    display: inline-block; /* Para comportarse como un botón */
+    padding: 10px 20px;
+    background-color: #333; /* Color de fondo del botón */
+    color: #fff; /* Color del texto */
+    text-decoration: none; /* Sin subrayado */
+    font-size: 16px;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra del botón */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.buttons:hover {
+    background-color: #555; /* Cambio de color al pasar el ratón */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+}

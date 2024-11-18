@@ -20,7 +20,7 @@
         <nav>
             <!-- INICI y GESTIÓ D'ARTICLES -->
             <div class="left">
-                <a href='../index.php'">INICI</a>
+                <a href='../index.php'>INICI</a>
             </div>
 
             <!-- PERFIL -->
@@ -31,7 +31,7 @@
                         ?> 
                     </a>
                     <div class="dropdown-content">
-                        <a href="../vista/vistaCanviContra.php">Nova contrasenya</a>
+                        <a href="../vista/vistaPerfil.php">Administrar perfil</a>
                         <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
                     </div>
             </div>

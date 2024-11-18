@@ -14,21 +14,48 @@
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+        if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" );}
+        require_once "../controlador/controladorAdministrarPerfil.php";
     ?>
+    
+    <nav>
+        <!-- INICI y GESTIÓ D'ARTICLES -->
+        <div class="left">
+            <a href="../index.php">INICI</a>
+        </div>
+
+        <!-- PERFIL -->
+        <div class="perfil">
+            <!-- Botons de perfil -->
+            <div class="perfil">
+                <a> <?php 
+                        $nomUsuari = $_SESSION["loginUsuari"]; 
+                        echo $nomUsuari;
+                    ?> 
+                </a>
+                <div class="dropdown-content">
+                    <a href="../vista/vistaCanviContra.php">Canviar contrasenya</a>
+                    <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <div class="login-container">
-        <h2>Editar Perfil</h2>
+        <h2>Administrar perfil</h2>
         <form action="save_profile.php" method="POST">
             <label for="username">Nombre de Usuario</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>">
             
             <label for="email">Correo Electrónico</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["loginCorreu"]) ? $_SESSION["loginCorreu"] : ''; ?>">
             
+            <div class="container-button">
+                <a href="../vista/vistaCanviContra.php" class="buttons">Canviar Contrasenya</a>
+            </div>
+
             <input type="submit" value="Guardar Cambios">
         </form>
-        <div class="form-footer">
-            <a href="profile.php">Tornar a inici</a> <!-- Enlace opcional para volver -->
-        </div>
     </div>
 </body>
 </html>
