@@ -66,6 +66,8 @@
 
         $mostrarPersonatges = "";
 
+        if ($paginaActual < 1) $paginaActual = 1;
+
         $personatges = consultarPerUsuariPaginacio($_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
 
         if (!empty($personatges)) {
@@ -119,6 +121,8 @@
         global $paginaActual;
         
         $mostrarPersonatges = "";
+
+        if ($paginaActual < 1) $paginaActual = 1;
 
         $personatges = consultarPaginacio($paginaActual, PERSONATGES_PER_PAGINA);
 

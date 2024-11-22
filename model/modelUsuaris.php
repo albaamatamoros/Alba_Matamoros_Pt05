@@ -73,10 +73,10 @@
     function comprovarNomUsuariExistent($nomUsuari, $usuariId){
         try {
             $connexio = connexio();
-            $statement = $connexio->prepare('SELECT * FROM usuaris WHERE nom_usuari = :nom_usuari AND id_usuari != :id_usuari');
+            $statement = $connexio->prepare('SELECT * FROM usuaris WHERE usuari = :usuari AND id_usuari != :id_usuari');
             $statement->execute(
                 array(
-                    ':nom_usuari' => $nomUsuari, 
+                    ':usuari' => $nomUsuari, 
                     ':id_usuari' => $usuariId 
                 )
             );
@@ -84,7 +84,6 @@
             echo "Error: " . $e->getMessage();
         }
     }
-
 
     //********************************************************
     //INSERT

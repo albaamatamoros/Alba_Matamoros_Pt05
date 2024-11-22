@@ -34,6 +34,7 @@
                     ?> 
                 </a>
                 <div class="dropdown-content">
+                    <a href="../vista/vistaPerfil.php">Administrar perfil</a>
                     <a href="../vista/vistaCanviContra.php">Canviar contrasenya</a>
                     <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
                 </div>
@@ -43,18 +44,37 @@
 
     <div class="login-container">
         <h2>Administrar perfil</h2>
-        <form action="save_profile.php" method="POST">
+        <form action="../controlador/controladorAdministrarPerfil.php" method="POST">
             <label for="username">Nombre de Usuario</label>
             <input type="text" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>">
             
             <label for="email">Correo Electrónico</label>
             <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["loginCorreu"]) ? $_SESSION["loginCorreu"] : ''; ?>" readonly disabled>
             
+            <!-- MISSATGE D'ERROR Y DE CONFIRMACIÓ -->
+            <?php if (!empty($errors)): ?>
+                    <div class="alert error-container">
+                        <span class="alert-icon error-icon">⚠️</span> <!-- Icono de advertencia -->
+                        <div>
+                            <?php foreach ($errors as $error): ?>
+                                <p class="alert-text error-message"><?php echo $error; ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php elseif (!empty($correcte)): ?>
+                    <div class="alert success-container">
+                        <span class="alert-icon success-icon">✔️</span> <!-- Icono de éxito -->
+                        <div>
+                            <p class="alert-text success-message"><?php echo $correcte; ?></p>
+                        </div>
+                    </div>
+            <?php endif; ?>
+
             <div class="container-button">
                 <a href="../vista/vistaCanviContra.php" class="buttons">Canviar Contrasenya</a>
             </div>
 
-            <input type="submit" value="Guardar Cambios">
+            <input name="action" type="submit" value="Guardar canvis">
         </form>
     </div>
 </body>

@@ -20,15 +20,15 @@
     <nav>
         <!-- INICI y GESTIÓ D'ARTICLES -->
         <div class="left">
-            <a href='../index.php'">INICI</a>
+            <a href='../index.php'>INICI</a>
         </div>
 
         <!-- PERFIL -->
         <div class="perfil">
             <a>PERFIL</a>
             <div class="dropdown-content">
-                <a href='../vista/vistaLogin.php'">Iniciar sessió</a>
-                <a href='../vista/vistaRegistrarse.php'">Registrar-se</a>
+                <a href='../vista/vistaLogin.php'>Iniciar sessió</a>
+                <a href='../vista/vistaRegistrarse.php'>Registrar-se</a>
             </div>
         </div>
     </nav>

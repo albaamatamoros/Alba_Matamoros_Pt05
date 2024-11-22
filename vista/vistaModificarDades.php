@@ -34,6 +34,7 @@
                     ?> 
                 </a>
                 <div class="dropdown-content">
+                    <a href="../vista/vistaPerfil.php">Administrar perfil</a>
                     <a href="../vista/vistaCanviContra.php">Nova contrasenya</a>
                     <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
                 </div>

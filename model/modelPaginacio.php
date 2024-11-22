@@ -24,7 +24,9 @@
 
     //Consultem els personatges per usuari tenint en compte la paginació.
     function consultarPerUsuariPaginacio($usuariId, $pagina, $personatgesPerPag) {
-        $offset = ($pagina - 1) * $personatgesPerPag; // Calcular l'offset
+    
+        // Calcular el offset
+        $offset = ($pagina - 1) * $personatgesPerPag; 
     
         try {
             $connexio = connexio();
@@ -34,11 +36,11 @@
             $statement->bindValue(':usuari_id', $usuariId, PDO::PARAM_INT);
             $statement->bindValue(':limit', $personatgesPerPag, PDO::PARAM_INT);
             $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
-    
+            
             $statement->execute();
             return $statement->fetchAll();
         } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+            echo "Error: ",$e->getMessage();
         }
     }
 
