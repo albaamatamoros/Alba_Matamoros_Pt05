@@ -38,7 +38,8 @@
                 } else { include "../vista/vistaInserir.php"; }
             } else { 
                 $errors[] = "No es pot completar aquesta acció.";
-                include "../vista/vistaInserir.php"; }
+                include "../vista/vistaInserir.php"; 
+            }
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }

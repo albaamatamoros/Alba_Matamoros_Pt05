@@ -22,7 +22,7 @@
                 if (empty($contrasenya)) { $errors[] = "➤ Et cal una contrasenya per iniciar sessió.";}
                 if (empty($errors)) {
                     //COMPROVAR USUARI I CONTRASENYA.
-                    $existe = comprovarContrasenya($usuari);
+                    $existe = comprovarExistensiaDUsuari($usuari);
                     if ($existe == false) {
                         $errors[] = "➤ No existeix aquest usuari";
                     } else { 

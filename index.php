@@ -93,9 +93,9 @@
             <!-- SEARCH BAR -->
             <!---------------->
             <div class="search-bar-container">
-                <form action="../controlador/controladorSearchBar.php" method="GET" class="search-form">
-                    <input type="search" name="query" placeholder="Cerca..." aria-label="Cerca" class="search-input" />
-                    <button type="submit" class="search-button">🔍</button>
+                <form action="./controlador/controladorSearchBar.php" method="GET" class="search-form">
+                    <input type="search"  placeholder="Cerca..." aria-label="Cerca" class="search-input" value="personatge"/>
+                    <button type="submit" name="action" class="search-button" value="Cercar">🔍</button>
                 </form>
             </div>
 
@@ -132,11 +132,23 @@
                 </form>
             </div>
 
+            <!-- Titulo -->
+            <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges</h1></div>
+
+            <!---------------->
+            <!-- SEARCH BAR -->
+            <!---------------->
+            <div class="search-bar-container">
+                <form action="./controlador/controladorSearchBar.php" method="GET" class="search-form">
+                    <input type="search" name="query" placeholder="Cerca..." aria-label="Cerca" class="search-input" />
+                    <button type="submit" class="search-button">🔍</button>
+                </form>
+            </div>
+
             <!-- PERSONATGES USUARI -->
-            <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges</h1> </div>
-                <div class="personatges-container">
-                    <?php echo paginacioPerUsuari(); ?>
-                </div>
+            <div class="personatges-container">
+                <?php echo paginacioPerUsuari(); ?>
+            </div>
 
             <!-- PAGINACIÓ PER USUARI -->
             <!-- Cridem a la funció que fa els càlculs i configura la paginació. -->

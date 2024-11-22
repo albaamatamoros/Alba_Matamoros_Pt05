@@ -41,7 +41,7 @@
     }
 
     //comprovem l'usuari i agafem la contrasenya.
-    function comprovarContrasenya($usuari){
+    function comprovarExistensiaDUsuari($usuari){
         try {
             $connexio = connexio();
             $statement = $connexio->prepare('SELECT * FROM usuaris WHERE usuari = :usuari');
@@ -69,6 +69,22 @@
             echo "Error: " . $e->getMessage();
         }
     }
+
+    function comprovarNomUsuariExistent($nomUsuari, $usuariId){
+        try {
+            $connexio = connexio();
+            $statement = $connexio->prepare('SELECT * FROM usuaris WHERE nom_usuari = :nom_usuari AND id_usuari != :id_usuari');
+            $statement->execute(
+                array(
+                    ':nom_usuari' => $nomUsuari, 
+                    ':id_usuari' => $usuariId 
+                )
+            );
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
 
     //********************************************************
     //INSERT
@@ -105,6 +121,20 @@
             array(
             ':contrasenya' => $contrasenyaCifrada,
             ':id_usuari' => $usuariId)
+            );
+        }catch (Exception $e){
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    function modificarNomUsuari($nomUsuari, $usuariId){
+        try {
+            $connexio = connexio();
+            $statement = $connexio->prepare('UPDATE usuaris SET usuari = :usuari WHERE id_usuari = :id_usuari');
+            $statement->execute( 
+            array(
+            ':usuari' => $nomUsuari,
+            ':id_usuari' => $_SESSION["loginId"])
             );
         }catch (Exception $e){
             echo "Error: " . $e->getMessage();

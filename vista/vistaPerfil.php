@@ -48,7 +48,7 @@
             <input type="text" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>">
             
             <label for="email">Correo Electrónico</label>
-            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["loginCorreu"]) ? $_SESSION["loginCorreu"] : ''; ?>">
+            <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["loginCorreu"]) ? $_SESSION["loginCorreu"] : ''; ?>" readonly disabled>
             
             <div class="container-button">
                 <a href="../vista/vistaCanviContra.php" class="buttons">Canviar Contrasenya</a>
