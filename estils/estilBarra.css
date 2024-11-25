@@ -78,3 +78,27 @@ nav .perfil .dropdown-content a {
 nav .perfil .dropdown-content a:hover {
     background-color: #555;
 }
+
+/*-------------------------*/
+/*--- CONTENIDO PAGINA ---*/
+/*------------------------*/
+
+/* Ajustar contenido principal */
+.main-content {
+    margin-top: 80px; /* Ajusta este valor según la altura de tu barra (10px padding + 60px aprox.) */
+    padding: 20px; /* Para dar espacio dentro del contenido */
+}
+
+
+/* --------------------- */
+/* --- USUARI IMATGE --- */
+/* --------------------- */
+
+.perfil .user-avatar {
+    width: 40px; /* Ajusta el tamaño de la imagen */
+    height: 40px;
+    border-radius: 50%; /* Hace la imagen redonda */
+    object-fit: cover; /* Asegura que la imagen se recorte correctamente */
+    margin-right: 8px; /* Espacio entre la imagen y el nombre */
+    vertical-align: middle; /* Alinea la imagen con el texto */
+}

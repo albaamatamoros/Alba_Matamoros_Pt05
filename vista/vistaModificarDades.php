@@ -28,7 +28,8 @@
 
             <!-- PERFIL -->
             <div class="perfil">
-                <a> <?php 
+                <a> 
+                    <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "../vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"><?php 
                         $nomUsuari = $_SESSION["loginUsuari"]; 
                         echo $nomUsuari;
                     ?> 

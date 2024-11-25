@@ -15,7 +15,7 @@
             session_start();
         }
     ?>
-    <body>
+    <body class="main-content">
         <!-- HEADER -->
         <nav>
             <!-- INICI y GESTIÓ D'ARTICLES -->
@@ -25,23 +25,24 @@
 
             <!-- PERFIL -->
             <div class="perfil">
-                    <a> <?php 
-                            $nomUsuari = $_SESSION["loginUsuari"]; 
-                            echo $nomUsuari;
-                        ?> 
-                    </a>
-                    <div class="dropdown-content">
-                        <a href="../vista/vistaPerfil.php">Administrar perfil</a>
-                        <a href="../vista/vistaCanviContra.php">Nova contrasenya</a>
-                        <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
-                    </div>
+                <a> 
+                    <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "../vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"><?php 
+                        $nomUsuari = $_SESSION["loginUsuari"]; 
+                        echo $nomUsuari;
+                    ?> 
+                </a>
+                <div class="dropdown-content">
+                    <a href="../vista/vistaPerfil.php">Administrar perfil</a>
+                    <a href="../vista/vistaCanviContra.php">Nova contrasenya</a>
+                    <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
+                </div>
             </div>
         </nav>
         
         <!-- BODY -->
         <div class="login-container">
             <h2>Canviar Contrasenya</h2>
-            <form action="../controlador/controladorCanviContra.php" method="POST">
+            <form action="../controlador/controladorAdministrarPerfil.php" method="POST">
 
                 <label for="contrasenya_actual">Contrasenya Actual:</label>
                 <input type="password" id="contrasenya_actual" name="contrasenya_actual">

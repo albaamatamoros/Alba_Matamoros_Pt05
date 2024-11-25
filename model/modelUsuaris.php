@@ -140,6 +140,20 @@
         }
     }
 
+    function modificarImatgePerfilUsuari($urlImatge, $usuariId) {
+        try {
+            $connexio = connexio();
+            $statement = $connexio->prepare('UPDATE usuaris SET imatge = :imatge WHERE id_usuari = :id_usuari');
+            $statement->execute( 
+            array(
+            ':imatge' => $urlImatge,
+            ':id_usuari' => $usuariId)
+            );
+        }catch (Exception $e){
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
     //********************************************************
     //INICIAR SESSIÓN
     
@@ -147,7 +161,7 @@
     function iniciSessio($usuari){
         try {
             $connexio = connexio();
-            $statement = $connexio->prepare('SELECT id_usuari, correu, usuari FROM usuaris WHERE usuari = :usuari');
+            $statement = $connexio->prepare('SELECT id_usuari, correu, usuari, nom, cognoms FROM usuaris WHERE usuari = :usuari');
             $statement->execute(
                 array(
                     ':usuari' => $usuari)

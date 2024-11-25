@@ -190,8 +190,14 @@ a.desactivado {
 /* FORM SELECCIO PERSONATGE SPER PAGINA */
 
 .selectPersonatge {
-    position: absolute;
-    top: 115px;
+    display: flex; /* Utiliza flexbox para alinear contenido dentro de este contenedor */
+    position: absolute; /* Si necesitas posicionar a 200px desde la parte superior */
+    top: 200px;
+    left: 20%; /* Puedes ajustar este valor según la posición horizontal deseada */
+    right: 0; /* Centra el elemento horizontalmente */
+    justify-content: left; /* Centra el contenido dentro del contenedor */
+    align-items: left; /* Alinea verticalmente el contenido dentro del contenedor */
+    margin: auto; /* Asegura que el elemento esté centrado si es necesario */
 }
 
 .selectPersonatge select {

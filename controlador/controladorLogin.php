@@ -34,6 +34,8 @@
                             $_SESSION["loginId"] = $result["id_usuari"];
                             $_SESSION["loginUsuari"] = $result["usuari"];
                             $_SESSION["loginCorreu"] = $result["correu"];
+                            $_SESSION["loginNom"] = $result["nom"];
+                            $_SESSION["loginCognom"] = $result["cognoms"];
                             header("Location: ../index.php");
                         }
                     }
