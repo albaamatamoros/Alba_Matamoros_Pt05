@@ -41,7 +41,7 @@ index.php ➜ Porta indexVista.php.
 - **Estils:**
     - estilBarra.css ➜ Estils de la barra de navegació. 
     - estilError.css ➜ Estils dels errors.
-    - estilIniciarRegistrar.css ➜ Estils dels forms/iniciar sessió i registrar-se.
+    - estilPerfil.css ➜ Estils dels forms/iniciar sessió i registrar-se.
     - estilMenuPersonatges.css ➜ Estil del menú per seleccionar, (Inserir, Modificar, Esborrar...)
     - estilMostrar.css ➜ Estils per mostrar els personatges + paginació.
     - estilPersonatges.css ➜ Estils dels forms, (Inserir, Esborrar, Modificar...)

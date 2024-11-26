@@ -4,7 +4,7 @@
     <!-- Alba Matamoros Morales -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../estils/estilIniciarRegistrar.css">
+    <link rel="stylesheet" href="../estils/estilPerfil.css">
     <link rel="stylesheet" href="../estils/estilBarra.css">
     <link rel="stylesheet" href="../estils/estilError.css">
     <title>Registrar-se</title>

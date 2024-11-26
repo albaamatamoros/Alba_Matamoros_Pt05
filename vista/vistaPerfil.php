@@ -4,7 +4,7 @@
     <!-- Alba Matamoros Morales -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../estils/estilIniciarRegistrar.css">
+    <link rel="stylesheet" href="../estils/estilPerfil.css">
     <link rel="stylesheet" href="../estils/estilBarra.css">
     <link rel="stylesheet" href="../estils/estilError.css">
     <title>Perfil</title>
@@ -35,7 +35,7 @@
             </a>
             <div class="dropdown-content">
                 <a href="../vista/vistaPerfil.php">Administrar perfil</a>
-                <a href="../vista/vistaCanviContra.php">Nova contrasenya</a>
+                <a href="../vista/vistaCanviContra.php">Canviar contrasenya</a>
                 <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
             </div>
         </div>
