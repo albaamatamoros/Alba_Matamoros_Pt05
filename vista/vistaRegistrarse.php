@@ -25,7 +25,10 @@
 
         <!-- PERFIL -->
         <div class="perfil">
-            <a>PERFIL</a>
+            <a> 
+                <img src="../vista/imatges/imatgesUsers/defaultUser.jpg" class="user-avatar">
+                PERFIL 
+            </a>
             <div class="dropdown-content">
                 <a href='../vista/vistaLogin.php'>Iniciar sessió</a>
                 <a href='../vista/vistaRegistrarse.php'>Registrar-se</a>

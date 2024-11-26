@@ -51,8 +51,8 @@
                 <a href="vista/vistaLogin.php">Iniciar sessió</a>
                 <a href="vista/vistaRegistrarse.php">Registrar-se</a>
         <?php else: ?>
-            <a> 
-                <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"><?php 
+           <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"> <a> 
+                <?php 
                     $nomUsuari = $_SESSION["loginUsuari"]; 
                     echo $nomUsuari;
                 ?> 
@@ -71,27 +71,28 @@
     <!------------------------->
     <section>
         <?php if (!isset($_SESSION['loginId'])): ?>
+            <div class="header-container">
 
-            <!------------------------->
-            <!-- PERSONATGES GLOBALS -->
-            <!------------------------->
-            <!-- Tornem la consulta amb tots els peronatges globals -->
-
-            <div class="selectPersonatge">
-                <form action="" method="POST">
-                    <select name="select" onchange="this.form.submit()">
-                    <?php foreach([5, 10, 15, 20] as $num): ?>
-                        <option value="<?php echo $num; ?>" <?php if (isset($_COOKIE['personatgesCookie']) && $_COOKIE['personatgesCookie'] == $num) echo 'selected'; ?>>
-                            <?php echo $num; ?>
-                        </option>
-                    <?php endforeach; ?>
-                    </select>
-                </form>
-            </div>
+                <!------------------------->
+                <!-- PERSONATGES GLOBALS -->
+                <!------------------------->
 
             <!-- Titulo -->
             <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges Global</h1></div>
-            
+                <!-- Tornem la consulta amb tots els peronatges globals -->
+
+                <div class="selectPersonatge">
+                    <form action="" method="POST">
+                        <select name="select" onchange="this.form.submit()">
+                        <?php foreach([5, 10, 15, 20] as $num): ?>
+                            <option value="<?php echo $num; ?>" <?php if (isset($_COOKIE['personatgesCookie']) && $_COOKIE['personatgesCookie'] == $num) echo 'selected'; ?>>
+                                <?php echo $num; ?>
+                            </option>
+                        <?php endforeach; ?>
+                        </select>
+                    </form>
+                </div>
+            </div>
             <!---------------->
             <!-- SEARCH BAR -->
             <!---------------->
