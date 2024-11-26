@@ -21,24 +21,22 @@
     <nav>
         <!-- INICI y GESTIÓ D'ARTICLES -->
         <div class="left">
-            <a href="../index.php">INICI</a>
+            <a href='../index.php'>INICI</a>
+            <a href="../vista/vistaMenu.php">GESTIÓ DE PERSONATGES</a>
         </div>
 
         <!-- PERFIL -->
         <div class="perfil">
-            <!-- Botons de perfil -->
-            <div class="perfil">
-                <a> 
-                    <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "../vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"><?php 
-                        $nomUsuari = $_SESSION["loginUsuari"]; 
-                        echo $nomUsuari;
-                    ?> 
-                </a>
-                <div class="dropdown-content">
-                    <a href="../vista/vistaPerfil.php">Administrar perfil</a>
-                    <a href="../vista/vistaCanviContra.php">Canviar contrasenya</a>
-                    <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
-                </div>
+            <a> 
+                <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "../vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"><?php 
+                    $nomUsuari = $_SESSION["loginUsuari"]; 
+                    echo $nomUsuari;
+                ?> 
+            </a>
+            <div class="dropdown-content">
+                <a href="../vista/vistaPerfil.php">Administrar perfil</a>
+                <a href="../vista/vistaCanviContra.php">Nova contrasenya</a>
+                <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
             </div>
         </div>
     </nav>

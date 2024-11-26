@@ -51,8 +51,9 @@
                 <a href="vista/vistaLogin.php">Iniciar sessió</a>
                 <a href="vista/vistaRegistrarse.php">Registrar-se</a>
         <?php else: ?>
-           <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"> <a> 
-                <?php 
+            <a>
+                <img src="<?php echo isset($_SESSION['loginImage']) ? substr($_SESSION['loginImage'], 1) : "vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar">
+                <?php
                     $nomUsuari = $_SESSION["loginUsuari"]; 
                     echo $nomUsuari;
                 ?> 
@@ -71,11 +72,10 @@
     <!------------------------->
     <section>
         <?php if (!isset($_SESSION['loginId'])): ?>
-            <div class="header-container">
 
-                <!------------------------->
-                <!-- PERSONATGES GLOBALS -->
-                <!------------------------->
+            <!------------------------->
+            <!-- PERSONATGES GLOBALS -->
+            <!------------------------->
 
             <!-- Titulo -->
             <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges Global</h1></div>
@@ -92,7 +92,6 @@
                         </select>
                     </form>
                 </div>
-            </div>
             <!---------------->
             <!-- SEARCH BAR -->
             <!---------------->

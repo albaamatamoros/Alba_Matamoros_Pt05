@@ -5,7 +5,7 @@
 /* ------------------------------------*/
 
 body {
-    background-image: url("wallpaper.jpg");
+    background-image: url("../vista/imatges/wallpaper.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
