@@ -20,6 +20,10 @@
 
     if (isset($_SESSION['loginId']) && !str_contains($_SERVER['SCRIPT_NAME'], '/vista')){
         $totalPersonatges = countPersonatgesPerUsuari($_SESSION['loginId']);
+    } else if (isset($_GET['search'])){
+        $totalPersonatges = cercaCountPersonatges($_GET['search']);
+    } else if (isset($_SESSION['loginId']) && isset($_GET['search'])){
+        $totalPersonatges = cercaCountPersonatgesUsuari($_GET['search'], $_SESSION['loginId']);
     } else {
         $totalPersonatges = countPersonatges();
     }
@@ -33,7 +37,15 @@
         $paginaActual = $totalPagines;
     }
     //-----------------------------------------
-    
+
+    //--------------------------
+    //--- FUNCIONS PAGINACIÓ ---
+    //--------------------------
+
+    //-----------------------------------------
+    //-------------- USUARI -------------------
+
+    //LINKS: PAGINACIO PER USUARI.
     //CREAR ELS LINKS DE LA PAGINACIÓ PER USUARI.
     function retornarLinksPerUsuari(){
         global $paginaActual;
@@ -60,6 +72,7 @@
         return $mostrarPaginacio;
     }
 
+    //MOSTRAR PERSONATGES PER USUARI.
     //PAGINACIO DELS PERSONATGES PROPIS D'UN USUARI.
     function paginacioPerUsuari(){
         global $paginaActual;
@@ -68,7 +81,12 @@
 
         if ($paginaActual < 1) $paginaActual = 1;
 
-        $personatges = consultarPerUsuariPaginacio($_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
+        if (!empty($_GET['search'])) {
+            $cerca = trim($_GET['search']);
+            $personatges = cercaPersonatgesUsuari($cerca, $_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
+        } else {
+            $personatges = consultarPerUsuariPaginacio($_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
+        }
 
         if (!empty($personatges)) {
             foreach ($personatges as $personatge){
@@ -89,7 +107,10 @@
 
         return $mostrarPersonatges;
     }
+    //-----------------------------------------
+    //-------------- GLOBAL -------------------
 
+    //LINKS: PAGINACIO GLOBAL.
     //CREAR ELS LINKS DE LA PAGINACIÓ GLOBAL.
     function retornarLinksGlobal(){
         global $paginaActual;
@@ -116,6 +137,7 @@
         return $mostrarPaginacio;
     }
 
+    //MOSTRAR PERSONATGES GLOBAL.
     //PAGINACIO DELS PERSONATGES GLOBAL.
     function paginacioGlobal(){
         global $paginaActual;
@@ -124,7 +146,12 @@
 
         if ($paginaActual < 1) $paginaActual = 1;
 
-        $personatges = consultarPaginacio($paginaActual, PERSONATGES_PER_PAGINA);
+        if (!empty($_GET['search'])) {
+            $cerca = trim($_GET['search']);
+            $personatges = cercaPersonatgesGlobal($cerca, $paginaActual, PERSONATGES_PER_PAGINA);
+        } else {
+            $personatges = consultarPaginacio($paginaActual, PERSONATGES_PER_PAGINA);
+        }
 
         if (!empty($personatges)) {
             foreach ($personatges as $personatge){

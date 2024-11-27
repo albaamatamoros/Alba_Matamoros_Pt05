@@ -30,6 +30,10 @@
     </script>
 </head>
 <nav>
+    <!------------------------>
+    <!-- BARRA DE NAVEGACIÓ -->
+    <!------------------------>
+
     <!-- INICI y GESTIÓ D'ARTICLES -->
     <div class="left">
     <a href="index.php">INICI</a>
@@ -39,7 +43,9 @@
         } ?>
     </div>
 
+    <!------------>
     <!-- PERFIL -->
+    <!------------>
     <div class="perfil">
         <!-- Botons de perfil -->
         <?php if (!isset($_SESSION['loginId'])): ?>
@@ -61,6 +67,9 @@
             <div class="dropdown-content">
                 <a href="vista/vistaPerfil.php">Administrar perfil</a>
                 <a href="vista/vistaCanviContra.php">Canviar contrasenya</a>
+                <?php if ($_SESSION["loginAdministrador"] == 1): ?>
+                    <a href="vista/vistaAdministrar.php">Administrar usuaris</a>
+                <?php endif; ?>
                 <a href="./controlador/controladorTancarSessio.php">Tancar sessió</a>
             <?php endif; ?>
         </div>
@@ -84,27 +93,32 @@
                 <div class="selectPersonatge">
                     <form action="" method="POST">
                         <select name="select" onchange="this.form.submit()">
-                        <?php foreach([5, 10, 15, 20] as $num): ?>
-                            <option value="<?php echo $num; ?>" <?php if (isset($_COOKIE['personatgesCookie']) && $_COOKIE['personatgesCookie'] == $num) echo 'selected'; ?>>
-                                <?php echo $num; ?>
-                            </option>
-                        <?php endforeach; ?>
+                            <?php foreach([5, 10, 15, 20] as $num): ?>
+                                <option value="<?php echo $num; ?>" <?php if (isset($_COOKIE['personatgesCookie']) && $_COOKIE['personatgesCookie'] == $num) echo 'selected'; ?>>
+                                    <?php echo $num; ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </form>
                 </div>
-            <!---------------->
-            <!-- SEARCH BAR -->
-            <!---------------->
+            <!----------------------->
+            <!-- Search bar global -->
+            <!----------------------->
             <div class="search-bar-container">
-                <form action="./controlador/controladorSearchBar.php" method="GET" class="search-form">
-                    <input type="search"  placeholder="Cerca..." aria-label="Cerca" class="search-input"/>
-                    <button type="submit" name="action" class="search-button" value="Cercar">🔍</button>
+                <form method="GET" action="index.php" class="search-form">
+                    <input type="search" name="search" placeholder="Cerca..." class="search-input"/>
+                    <button type="submit" class="search-button">🔍</button>
                 </form>
             </div>
 
+            <!----------------------------------------->
+            <!--- Paginació Global, links i mostrar --->
+            <!----------------------------------------->
             <div class="personatges-container">
                 <!-- Paginación Global -->
-                <?php echo paginacioGlobal(); ?>
+                <?php 
+                    echo paginacioGlobal(); 
+                ?>
             </div>
 
             <!-- PAGINACIÓ GLOBAL -->
@@ -126,11 +140,11 @@
             <div class="selectPersonatge">
                 <form action="" method="POST">
                     <select name="select" onchange="this.form.submit()">
-                    <?php foreach([5, 10, 15, 20] as $num): ?>
-                        <option value="<?php echo $num; ?>" <?php if (isset($_COOKIE['personatgesCookie']) && $_COOKIE['personatgesCookie'] == $num) echo 'selected'; ?>>
-                            <?php echo $num; ?>
-                        </option>
-                    <?php endforeach; ?>
+                        <?php foreach([5, 10, 15, 20] as $num): ?>
+                            <option value="<?php echo $num; ?>" <?php if (isset($_COOKIE['personatgesCookie']) && $_COOKIE['personatgesCookie'] == $num) echo 'selected'; ?>>
+                                <?php echo $num; ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </form>
             </div>
@@ -138,16 +152,19 @@
             <!-- Titulo -->
             <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges</h1></div>
 
-            <!---------------->
-            <!-- SEARCH BAR -->
-            <!---------------->
+            <!----------------------->
+            <!-- Search bar Usuari -->
+            <!----------------------->
             <div class="search-bar-container">
-                <form action="./controlador/controladorSearchBar.php" method="GET" class="search-form">
-                    <input type="search" name="query" placeholder="Cerca..." aria-label="Cerca" class="search-input" />
+                <form method="GET" action="index.php" class="search-form">
+                    <input type="search" name="search" placeholder="Cerca..." class="search-input"/>
                     <button type="submit" class="search-button">🔍</button>
                 </form>
             </div>
 
+            <!----------------------------------------->
+            <!--- Paginació Usuari, links i mostrar --->
+            <!----------------------------------------->
             <!-- PERSONATGES USUARI -->
             <div class="personatges-container">
                 <?php echo paginacioPerUsuari(); ?>

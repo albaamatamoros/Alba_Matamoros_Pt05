@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 <?php elseif (!empty($correcte)): ?>
-                    <div class="success-container">
+                    <div class="alert success-container">
                         <span class="alert-icon success-icon">✔️</span> <!-- Icono de éxito -->
                         <div>
                             <p class="alert-text success-message"><?php echo $correcte; ?></p>

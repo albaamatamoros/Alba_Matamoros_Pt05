@@ -161,7 +161,7 @@
     function iniciSessio($usuari){
         try {
             $connexio = connexio();
-            $statement = $connexio->prepare('SELECT id_usuari, correu, usuari, nom, cognoms, imatge FROM usuaris WHERE usuari = :usuari');
+            $statement = $connexio->prepare('SELECT id_usuari, correu, usuari, nom, cognoms, imatge, administrador FROM usuaris WHERE usuari = :usuari');
             $statement->execute(
                 array(
                     ':usuari' => $usuari)

@@ -31,12 +31,14 @@
                             $errors[] = "➤ La contrasenya no es correcta";
                         } else {
                             $result = iniciSessio($usuari);
+                            //Guardar dades de l'usuari a la Sesssion.
                             $_SESSION["loginId"] = $result["id_usuari"];
                             $_SESSION["loginUsuari"] = $result["usuari"];
                             $_SESSION["loginCorreu"] = $result["correu"];
                             $_SESSION["loginNom"] = $result["nom"];
                             $_SESSION["loginCognom"] = $result["cognoms"];
                             $_SESSION["loginImage"] = $result["imatge"];
+                            $_SESSION["loginAdministrador"] = $result["administrador"];
                             header("Location: ../index.php");
                         }
                     }
