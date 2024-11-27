@@ -12,6 +12,7 @@
     //Comprovar si el personatge es seu.
     $creat = false;
     require_once "../model/modelPersonatges.php";
+    require_once "../model/modelUsuaris.php";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $accion = ($_POST["action"]);
 
@@ -53,6 +54,14 @@
         
             esborrarPerId($idPersonatge);
         
+            header("Location: ../index.php?pagina=1");
+        } else if (isset($_GET['id_usuari'])) {
+            $idUsuari = $_GET['id_usuari'];
+        
+            esborrarUsuariPerId($idUsuari);
+        
+            header("Location: ../vista/vistaAdministrarUsuaris.php");
+        } else {
             header("Location: ../index.php?pagina=1");
         }
     }

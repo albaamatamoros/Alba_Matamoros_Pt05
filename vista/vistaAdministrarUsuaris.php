@@ -6,6 +6,16 @@
     <link rel="stylesheet" href="../estils/estilPerfil.css">
     <link rel="stylesheet" href="../estils/estilBarra.css">
     <link rel="stylesheet" href="../estils/estilError.css">
+    <script>
+    function confirmarEsborrarUsuari(idUsuari) {
+        let confirmacion = confirm("Segur que vols esborrar aquest usuari?");
+        
+        if (confirmacion) {
+            // Redirige a la URL del controlador, pasando el ID del usuario como parámetro GET
+            window.location.href = '../controlador/controladorEsborrar.php?id_usuari=' + idUsuari;
+        }
+    }
+</script>
     <title>Administrar usuaris</title>
 </head>
 <body>
@@ -14,7 +24,7 @@
             session_start();
         }
         if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" );}
-        require_once "../controlador/controladorAdministrarPerfil.php";
+        require_once "../controlador/controladorPaginacio.php";
     ?>
     <nav>
         <!-- INICI y GESTIÓ D'ARTICLES -->
@@ -38,5 +48,25 @@
             </div>
         </div>
     </nav>
+    <div class="usuarios-container">
+        <h2 class="usuarios-titulo">Llistat d'Usuaris</h2>
+        <div class="usuarios-tabla">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imatge</th>
+                        <th>Usuari</th>
+                        <th>Nom</th>
+                        <th>Cognoms</th>
+                        <th>Correu</th>
+                        <th>Acció</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php echo mostrarUsuaris(); ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

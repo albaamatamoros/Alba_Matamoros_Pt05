@@ -4,12 +4,6 @@
 /* -- PAGINACÓ I MOSTRAR PERSONATGES --*/
 /* ------------------------------------*/
 
-body {
-    background-image: url("../vista/imatges/wallpaper.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 /* Estilos generales */
 section {
     margin: 0 auto;
@@ -192,7 +186,7 @@ a.desactivado {
 /* Estilo principal del contenedor */
 .selectPersonatge {
     position: absolute; /* Permite colocarlo con mayor precisión */
-    top: 250px; /* Ajusta según tu diseño */
+    top: 200px; /* Ajusta según tu diseño */
     left: 200px; /* Mueve el botón completamente hacia la izquierda */
     z-index: 10; /* Asegura que esté por encima de otros elementos */
     display: flex; 

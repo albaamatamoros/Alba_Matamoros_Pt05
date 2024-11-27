@@ -5,6 +5,7 @@
     }
     if(str_contains($_SERVER['SCRIPT_NAME'], '/vista')) {
         require_once '../model/modelPaginacio.php';
+        require_once '../model/modelUsuaris.php';
     } else {
         require_once './model/modelPaginacio.php';
     }
@@ -168,4 +169,35 @@
 
         return $mostrarPersonatges;
     }
+
+    //-----------------------------------------------------
+    //-------------- ADMINISTRAR USUARIS -------------------
+
+    function mostrarUsuaris() {
+        $mostrarUsuaris = "";
+    
+        $usuaris = mostrarTotsElsUsuaris($_SESSION['loginId']); 
+    
+        if (!empty($usuaris)) {
+            foreach ($usuaris as $usuari) {
+                $mostrarUsuaris .= "<tr>
+                                        <td>
+                                            <img src='" . (empty($usuari['imatge']) ? "../vista/imatges/imatgesUsers/defaultUser.jpg" : $usuari['imatge']) . "' width='50'>
+                                        </td>
+                                        <td>{$usuari['usuari']}</td>
+                                        <td>{$usuari['nom']}</td>
+                                        <td>{$usuari['cognoms']}</td>
+                                        <td>{$usuari['correu']}</td>
+                                        <td>
+                                            <a href='#' onclick='confirmarEsborrarUsuari({$usuari["id_usuari"]})'>Eliminar</a>
+                                        </td>
+                                    </tr>";
+            }
+        } else {
+            $mostrarUsuaris = '<tr><td colspan="5">No hi ha usuaris disponibles.</td></tr>';
+        }
+    
+        return $mostrarUsuaris;
+    }
+    
 ?>

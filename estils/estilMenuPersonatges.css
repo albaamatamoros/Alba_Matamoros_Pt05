@@ -4,23 +4,12 @@
 /* -- MENÚ: INSERTAR, ELIMINAR..... --*/
 /* ------------------------------------*/
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
 body {
-    background-image: url("../vista/imatges/wallpaper.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin-top: 60px;
-    padding: 20px;
 }
 
 .button-container {

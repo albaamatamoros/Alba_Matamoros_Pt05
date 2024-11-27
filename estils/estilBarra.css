@@ -5,7 +5,13 @@
 /* --------------------*/
 
 body {
-    background-color: #f4f4f4;
+    background-image: url("../vista/imatges/wallpaper.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
 }
 
 * {
@@ -85,11 +91,10 @@ nav .perfil .dropdown-content a:hover {
 /*------------------------*/
 
 /* Ajustar contenido principal */
-.main-content {
-    margin-top: 80px; /* Ajusta este valor según la altura de tu barra (10px padding + 60px aprox.) */
+.content {
+    margin-top: 9rem; /* Ajusta este valor según la altura de tu barra (10px padding + 60px aprox.) */
     padding: 20px; /* Para dar espacio dentro del contenido */
 }
-
 
 /* --------------------- */
 /* --- USUARI IMATGE --- */

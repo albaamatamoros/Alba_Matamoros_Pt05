@@ -171,4 +171,33 @@
             echo "Error: " . $e->getMessage();
         }
     }
+
+    //********************************************************
+    //ESBORRAR
+
+    function esborrarUsuariPerId($idUsuari){
+        try {
+            $connexio = connexio();
+            $statement = $connexio->prepare('DELETE FROM usuaris WHERE id_usuari = :id_usuari');
+            $statement->execute(array(':id_usuari' => $idUsuari));
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    //********************************************************
+    //MOSTRAR USUARIS
+    function mostrarTotsElsUsuaris($usuariId){
+        try {
+            $connexio = connexio();
+            $statement = $connexio->prepare('SELECT * FROM usuaris WHERE id_usuari != :id_usuari AND administrador = 0');
+            $statement->execute(array(':id_usuari' => $usuariId));
+            
+            // Usamos fetchAll() para obtener todos los resultados
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
 ?>
