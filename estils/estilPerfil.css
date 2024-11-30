@@ -69,6 +69,12 @@ body {
     cursor: pointer;
 }
 
+.recaptcha-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    margin: 10px auto 20px auto; /* Añade margen */
+}
+
 .login-container input[type="submit"]:hover {
     background-color: #555;
 }
@@ -99,7 +105,14 @@ body {
     cursor: pointer;             /* Aparece un puntero al pasar el mouse sobre él */
 }
 
-/* Estilos para la imagen de perfil */
+.info-container {
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* -------------------- */
+/* -- USUARIS IMAGEN -- */
+/* -------------------- */
 
 .user-avatar2 {
     width: 100px;
@@ -123,9 +136,9 @@ body {
     align-items: center; /* Centra la imagen y los otros elementos dentro del formulario */
 }
 
-/* ------------------------- */
+/* ---------------------------- */
 /* -- ESTILS LLISTAT USUARIS -- */
-/* ------------------------- */
+/* ---------------------------- */
 
 .usuarios-container {
     background-color: #fff;

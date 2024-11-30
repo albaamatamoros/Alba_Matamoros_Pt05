@@ -17,6 +17,11 @@
         try {
             switch ($accion) {
                 case "Guardar canvis":
+
+                    //---------------------------
+                    //---  MODIFICAR USUARIO  ---
+                    //---------------------------
+
                     //CANVIAR USUARIO:
                     $nomUsuari = htmlspecialchars($_POST["username"]);
                     $usuariId = htmlspecialchars($_SESSION["loginId"]);
@@ -29,6 +34,7 @@
                         $errors[] = "➤ No s'ha fet cap canvi.";
                     }
 
+                    //------- MODIFICAR NOM USUARI -------
                     if (empty($errors)) {
                         // Comprobar si el nombre de usuario ya existe
                         $exsist = comprovarNomUsuariExistent($nomUsuari, $_SESSION["loginId"]);
@@ -42,43 +48,53 @@
                         }
                     }
 
-                    // CANVIAR/AFEGIR IMATGE:
-                    if ($_FILES["arxiu"]["name"] != "") {
-                        if ($_FILES['arxiu']['error'] == 0) {
-                            // Obtener detalles de la imagen
-                            $nomImatge = $_FILES['arxiu']['name'];
-                            $tipusImatge = $_FILES['arxiu']['type'];
-                            $directoriTemporalImatge = $_FILES['arxiu']['tmp_name']; 
+                    $tipusImatge = $_FILES['arxiu']['type'];
+                    if ($tipusImatge != 'image/png' && $tipusImatge != 'image/jpg' && $tipusImatge != 'image/jpeg') {
+                        $errors[] = "➤ Tipus d'arxiu no permès. Només es permeten PNG i JPG.";
+                    }
 
-                            // Carpeta de destino para la imagen
-                            $directoriDestiImatge = '../vista/imatges/imatgesUsers/';
-                            $nomUnic = uniqid() . "_" . basename($nomImatge);
+                    //-------- MODIFICAR IMATGE -------
+                    if (empty($errors)) {
+                        // CANVIAR/AFEGIR IMATGE:
+                        if ($_FILES["arxiu"]["name"] != "") {
+                            if ($_FILES['arxiu']['error'] == 0) {
+                                // Obtener detalles de la imagen
+                                $nomImatge = $_FILES['arxiu']['name'];
+                                
+                                var_dump($tipusImatge);
+                                $directoriTemporalImatge = $_FILES['arxiu']['tmp_name']; 
 
-                            // Mover el archivo al directorio de destino
-                            if (move_uploaded_file($directoriTemporalImatge, $directoriDestiImatge . $nomUnic)) {
-                                // Guardar la URL de la imagen
-                                $urlImatge = $directoriDestiImatge . $nomUnic;
-                                modificarImatgePerfilUsuari($urlImatge, $usuariId);
-                                $_SESSION["loginImage"] = $urlImatge;
-                                $correcte = "➤ Usuari modificat correctament.";
+                                // Carpeta de destino para la imagen
+                                $directoriDestiImatge = '../vista/imatges/imatgesUsers/';
+                                $nomUnic = uniqid() . "_" . basename($nomImatge);
+
+                                // Mover el archivo al directorio de destino
+                                if (move_uploaded_file($directoriTemporalImatge, $directoriDestiImatge . $nomUnic)) {
+                                    if (isset($_SESSION["loginImage"])) {
+                                        // Eliminar la imagen anterior
+                                        unlink($_SESSION["loginImage"]);
+                                    }
+                                    // Guardar la URL de la imagen
+                                    $urlImatge = $directoriDestiImatge . $nomUnic;
+                                    modificarImatgePerfilUsuari($urlImatge, $usuariId);
+                                    $_SESSION["loginImage"] = $urlImatge;
+                                    $correcte = "➤ Usuari modificat correctament.";
+                                } else {
+                                    $errors[] = "➤ Error al pujar la imatge.";
+                                }
                             } else {
                                 $errors[] = "➤ Error al pujar la imatge.";
                             }
-                        } else {
-                            $errors[] = "➤ Error al pujar la imatge.";
                         }
                     }
-
-                    // Mostrar los errores y/o el mensaje de éxito
-                    if (!empty($errors)) {
-                        // Incluir la vista de perfil con los errores
-                        include "../vista/vistaPerfil.php"; 
-                    } else {
-                        // Si no hay errores, mostrar el mensaje de éxito
-                        include "../vista/vistaPerfil.php"; 
-                    }
+                    
+                    include "../vista/vistaPerfil.php"; 
                     break;
                 case "Canviar Contrasenya":
+                    //-----------------------------
+                    //---  CANVIAR CONTRASENYA  ---
+                    //-----------------------------
+
                     //CANVIAR CONTRASENYA:
                     $contrasenyaActual = (htmlspecialchars($_POST["contrasenya_actual"]));
                     $novaContrasenya = (htmlspecialchars($_POST["nova_contrasenya"]));
@@ -121,6 +137,29 @@
                             include "../vista/vistaCanviContra.php"; 
                         }
                     } else { include "../vista/vistaCanviContra.php"; }
+                    break;
+                case "Restablir Contrasenya":
+                    //RESTABLIR CONTRASENYA:
+                    $email = htmlspecialchars($_POST["email"]);
+
+                    //CONTROL D'ERRORS
+                    if (empty($email)) { $errors[] = "➤ El camp 'email' és obligatori."; }
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { $errors[] = "➤ El format de l'email no és correcte."; }
+
+                    //Si errors es buit ->
+                    if (empty($errors)) {
+                        //Comprovar si existeix l'email.
+                        $existe = comprovarEmail($email);
+                        if ($existe == false) {
+                            $errors[] = "➤ No existeix aquest usuari.";
+                        } else {
+                            //PROGRESSS...........
+                            echo "Email enviat.";   
+                        }
+                        if (!empty($errors)){ 
+                            include "../vista/vistaRecuperarContrasenya.php"; 
+                        }
+                    } else { include "../vista/vistaRecuperarContrasenya.php"; }
                     break;
                 default:
                     //SI NO AGAFA CAP DADA:

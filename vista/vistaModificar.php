@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../estils/estilPersonatges.css">
     <link rel="stylesheet" href="../estils/estilBarra.css">
-    <link rel="stylesheet" href="../estils/estilErrors.css">
+    <link rel="stylesheet" href="../estils/estilError.css">
     <title>Modificar Personatge</title>
 </head>
     <?php
@@ -14,7 +14,11 @@
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" );}
+        if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" ); }
+        require_once "../controlador/controladorErrors.php";
+
+        $errors = isset($errors) ? $errors : [];
+        $correcte = isset($correcte) ? $correcte : null;
     ?>
     <body>
         <nav>
@@ -53,16 +57,7 @@
                 <input type="text" id="nom" name="nom"/>
 
                 <!-- CONTROL D'ERRORS -->
-                <?php if (!empty($errors)): ?>
-                    <div class="error-container">
-                        <span class="error-icon">⚠️</span> <!-- Icono de advertencia -->
-                        <div>
-                            <?php foreach ($errors as $error): ?>
-                                <p class="error-message"><?php echo $error; ?></p>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
+                <?php mostrarMissatge($errors, $correcte) ?>
                 
                 <!-- MODIFICAR -->
                 <div class="button-group">

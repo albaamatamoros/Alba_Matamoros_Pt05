@@ -8,13 +8,18 @@
     <link rel="stylesheet" href="../estils/estilBarra.css">
     <link rel="stylesheet" href="../estils/estilError.css">
     <title>Iniciar sessió</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <?php //Verificar si la sessió no està activa. (Comprovació perquè no s'intenti accedir mitjançant ruta).
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        if (isset($_SESSION["loginId"])) { header("Location: ../index.php" );} 
+        if (isset($_SESSION["loginId"])) { header("Location: ../index.php" ); }
+        require_once "../controlador/controladorErrors.php";
+
+        $errors = isset($errors) ? $errors : [];
+        $correcte = isset($correcte) ? $correcte : null;
     ?>
     <nav>
         <!-- INICI y GESTIÓ D'ARTICLES -->
@@ -43,27 +48,19 @@
             <label for="contrasenya">Contrasenya:</label>
             <input type="password" id="contrasenya" name="contrasenya">
 
+            <?php if (isset($_SESSION['loginRecaptcha']) && $_SESSION['loginRecaptcha'] >= 3): ?>
+                <div class="recaptcha-container">
+                    <div class="g-recaptcha" data-sitekey="6LeA3owqAAAAADrlORuAb9IM9WI7O29mDUwJ0IDP"></div>
+                </div>
+            <?php endif; ?>
+
             <input type="submit" name="action" value="Iniciar sessió">
+
+            <a href="../vista/vistaRecuperarContrasenya.php">Heu oblidat la contrasenya?</a>
         </form>
 
         <!-- CONTROL D'ERRORS -->
-        <?php if (!empty($errors)): ?>
-            <div class="alert error-container">
-                <span class="alert-icon error-icon">⚠️</span> <!-- Icono de advertencia -->
-                <div>
-                    <?php foreach ($errors as $error): ?>
-                        <p class="alert-text error-message"><?php echo $error; ?></p>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        <?php elseif (!empty($correcte)): ?>
-            <div class="alert success-container">
-                <span class="alert-icon success-icon">✔️</span> <!-- Icono de éxito -->
-                <div>
-                    <p class="alert-text success-message"><?php echo $correcte; ?></p>
-                </div>
-            </div>
-        <?php endif; ?>
+        <?php mostrarMissatge($errors, $correcte) ?>
 
         <div class="form-footer">
             <p>No tens compte? <a href="../vista/vistaRegistrarse.php">Registrat</a></p>

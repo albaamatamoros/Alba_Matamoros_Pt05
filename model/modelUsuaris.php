@@ -85,6 +85,20 @@
         }
     }
 
+    function comprovarEmail($email){
+        try {
+            $connexio = connexio();
+            $statement = $connexio->prepare('SELECT * FROM usuaris WHERE correu = :correu');
+            $statement->execute(
+                array(
+                ':correu' => $email)
+            );
+            return $statement->fetch();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
     //********************************************************
     //INSERT
 

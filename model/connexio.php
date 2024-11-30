@@ -11,7 +11,7 @@ require_once __DIR__ . '/../env.php';
 
     //Connexió.
     try {
-        $connexio = new PDO("mysql:host=$host;dbname=$nomBD", $usuari, $contra);
+        $connexio = new PDO("mysql:host=$host;dbname=$nomBD;charset=utf8", $usuari, $contra);
         return $connexio;
         //echo "Connexio correcta!!" . "<br />"; 
     } catch (PDOException $e){

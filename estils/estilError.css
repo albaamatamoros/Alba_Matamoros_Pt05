@@ -4,11 +4,11 @@
 /* -- CONTROL D'ERRORS --*/
 /* ---------------------- */
 
-/* ERORRES */
+/* ERROR */
 .error-container {
     background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    color: black;
+    border: 1px solid #920d1b;
     padding: 15px;
     margin: 10px 0;
     border-radius: 5px;
@@ -18,10 +18,11 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* CORRECTE */
 .success-container {
-    background-color: #f8d7da;
-    color: #1f741a;
-    border: 1px solid #f5c6cb;
+    background-color: #8be985;
+    color: black;
+    border: 1px solid #1f741a;
     padding: 15px;
     margin: 10px 0;
     border-radius: 5px;
@@ -31,6 +32,7 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* ESTILS */
 .error-icon, .success-icon {
     margin-right: 10px;
     font-size: 20px;

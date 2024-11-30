@@ -77,8 +77,8 @@
             <!-- SEARCH BAR -->
             <!---------------->
             <div class="search-bar-container">
-                <form action="../controlador/controladorSearchBar.php" method="GET" class="search-form">
-                    <input type="search" name="query" placeholder="Cerca..." aria-label="Cerca" class="search-input" />
+                <form method="GET" action="vistaConsultar.php" class="search-form">
+                    <input type="search" name="search" placeholder="Cerca..." class="search-input"/>
                     <button type="submit" class="search-button">🔍</button>
                 </form>
             </div>

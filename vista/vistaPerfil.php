@@ -16,6 +16,10 @@
         }
         if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" );}
         require_once "../controlador/controladorAdministrarPerfil.php";
+        require_once "../controlador/controladorErrors.php";
+
+        $errors = isset($errors) ? $errors : [];
+        $correcte = isset($correcte) ? $correcte : null;
     ?>
     <div class="content">
         <nav>
@@ -66,24 +70,8 @@
                 <label for="email">Correo Electrónico</label>
                 <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["loginCorreu"]) ? $_SESSION["loginCorreu"] : ''; ?>" readonly disabled>
                 
-                <!-- MISSATGE D'ERROR Y DE CONFIRMACIÓ -->
-                <?php if (!empty($errors)): ?>
-                        <div class="alert error-container">
-                            <span class="alert-icon error-icon">⚠️</span> <!-- Icono de advertencia -->
-                            <div>
-                                <?php foreach ($errors as $error): ?>
-                                    <p class="alert-text error-message"><?php echo $error; ?></p>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    <?php elseif (!empty($correcte)): ?>
-                        <div class="alert success-container">
-                            <span class="alert-icon success-icon">✔️</span> <!-- Icono de éxito -->
-                            <div>
-                                <p class="alert-text success-message"><?php echo $correcte; ?></p>
-                            </div>
-                        </div>
-                <?php endif; ?>
+                <!-- CONTROL D'ERRORS -->
+                <?php mostrarMissatge($errors, $correcte) ?>
 
                 <input name="action" type="submit" value="Guardar canvis">
             </form>

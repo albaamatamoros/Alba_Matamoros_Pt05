@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../estils/estilPersonatges.css">
     <link rel="stylesheet" href="../estils/estilBarra.css">
-    <link rel="stylesheet" href="../estils/estilErrors.css">
+    <link rel="stylesheet" href="../estils/estilError.css">
     <title>Modificar Personatge</title>
 </head>
     <?php
@@ -14,9 +14,12 @@
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" );}
-
+        if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" ); }
         require_once "../controlador/controladorModificarDades.php";
+        require_once "../controlador/controladorErrors.php";
+
+        $errors = isset($errors) ? $errors : [];
+        $correcte = isset($correcte) ? $correcte : null;
     ?>
     <body>
         <nav>
@@ -68,24 +71,9 @@
                 <label for="text">Descripció:</label>
                 <input type="text" id="text" name="text" value="<?php echo isset($personatgeBD["cos"]) ? $personatgeBD["cos"] : ''; ?>"/>
 
-                <!-- MISSATGE D'ERROR Y DE CONFIRMACIÓ -->
-                <?php if (!empty($errors)): ?>
-                    <div class="alert error-container">
-                        <span class="alert-icon error-icon">⚠️</span> <!-- Icono de advertencia -->
-                        <div>
-                            <?php foreach ($errors as $error): ?>
-                                <p class="alert-text error-message"><?php echo $error; ?></p>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                <?php elseif (!empty($correcte)): ?>
-                    <div class="alert success-container">
-                        <span class="alert-icon success-icon">✔️</span> <!-- Icono de éxito -->
-                        <div>
-                            <p class="alert-text success-message"><?php echo $correcte; ?></p>
-                        </div>
-                    </div>
-                <?php endif; ?>                
+                <!-- CONTROL D'ERRORS -->
+                <?php mostrarMissatge($errors, $correcte) ?>
+
                 <!-- Amb un input invisible pasem l'id a controlador -->
                 <input type="hidden" name="id" value="<?php echo isset($_GET["id_personatge"]) ? $_GET["id_personatge"] : ''; ?>"/>
 

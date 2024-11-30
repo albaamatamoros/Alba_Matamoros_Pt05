@@ -31,6 +31,9 @@ section {
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-top: 60px; 
+    overflow-wrap: break-word; /* Permite cortar palabras largas */
+    word-break: break-word;    /* Asegura que las palabras se dividan */
+    white-space: normal;       /* Permite el salto de línea */
 }
 
 .personatges-container {
@@ -49,6 +52,8 @@ section {
     position: relative; 
     transition: transform 0.3s, box-shadow 0.3s;
     min-height: 200px; 
+    overflow-wrap: break-word; /* Permite cortar palabras largas */
+    word-break: break-word;    /* Fuerza el corte de palabras largas */
 }
 
 .personatge-box:hover {
@@ -60,12 +65,17 @@ section {
     font-size: 1.6rem;
     margin-bottom: 8px;
     color: #333;
+    overflow-wrap: break-word; /* Evita que las palabras largas sobresalgan */
+    word-break: break-word;
+    text-align: center;
 }
 
 .personatge-cos {
     font-size: 0.9rem;
     color: #666;
     margin-bottom: 12px;
+    overflow-wrap: break-word; /* Ajusta el texto en contenedores pequeños */
+    word-break: break-word;
 }
 
 .personatge-botons {
@@ -89,7 +99,8 @@ section {
     justify-content: center;
     cursor: pointer;
     transition: transform 0.3s, background-color 0.3s;
-    text-decoration: none; }
+    text-decoration: none;
+}
 
 .eliminar-btn {
     background-color: #e74c3c;
@@ -182,8 +193,6 @@ a.desactivado {
 }
 
 /* FORM SELECCIO PERSONATGE SPER PAGINA */
-
-/* Estilo principal del contenedor */
 .selectPersonatge {
     position: absolute; /* Permite colocarlo con mayor precisión */
     top: 200px; /* Ajusta según tu diseño */
@@ -203,7 +212,6 @@ a.desactivado {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease; /* Transición suave para cambios */
 }
-
 
 /* Adaptaciones para pantallas medianas */
 @media (max-width: 768px) {
@@ -228,14 +236,11 @@ a.desactivado {
 }
 
 /* SEARCH BAR */
-
-/* Contenedor para centrar la barra de búsqueda */
 .search-bar-container {
     text-align: center;
     margin: 15px 0;
 }
 
-/* Estilo del formulario de búsqueda */
 .search-form {
     display: inline-flex;
     align-items: center;
@@ -245,7 +250,6 @@ a.desactivado {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo del campo de entrada */
 .search-input {
     border: none;
     padding: 10px;
@@ -256,14 +260,12 @@ a.desactivado {
     transition: width 0.3s ease;
 }
 
-/* Cambio de tamaño del campo de entrada al hacer foco */
 .search-input:focus {
     width: 250px;
 }
 
-/* Estilo del botón de búsqueda */
 .search-button {
-    background-color: #383b38; /* Usa el color de tus botones */
+    background-color: #383b38; 
     color: white;
     border: none;
     padding: 10px 15px;
@@ -273,13 +275,10 @@ a.desactivado {
     transition: background-color 0.3s;
 }
 
-/* Efecto hover en el botón de búsqueda */
 .search-button:hover {
     background-color: #c1121f;
 }
 
-/* Ajuste de color de fondo y texto del input al hacer hover */
 .search-input:hover {
     background-color: #f0f0f0;
 }
-

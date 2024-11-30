@@ -3,23 +3,48 @@
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    //Array d'errors.
+    //------------ Variables control d'errors ------------
+    //comprovacions, missatges i variables de control.
     $errors = [];
-    //Comprovar l'exsistencia d'un usuari.
+    //comprovar si la contrasenya es correcta.
+    $correct = false;
+    //existeix l'usuari.
     $exsist = false;
-    //Si es correcta la contrasenya.
-    $correct = "false";
+    
+    //----------------- reCaptcha -----------------
+    //Clau secreta reCaptcha.
+    $clauSecretaRecaptcha = "6LeA3owqAAAAAAgYe7JC6GOVbaR46dHA0gOa2jeO";
+
     require_once "../model/modelUsuaris.php";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $accion = ($_POST["action"]);
         try {
             if ($accion == "Iniciar sessió"){
+                if (!isset($_SESSION['loginRecaptcha'])) {
+                    $_SESSION['loginRecaptcha'] = 0;
+                }
+
                 $usuari = htmlspecialchars(($_POST["usuari"]));
                 $contrasenya = htmlspecialchars(($_POST["contrasenya"]));
-
+                $recaptchaResponse = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : null;
+                
                 //Comprovar dades.
                 if (empty($usuari)) { $errors[] = "➤ No pots iniciar sessió amb un usuari buit."; } 
                 if (empty($contrasenya)) { $errors[] = "➤ Et cal una contrasenya per iniciar sessió.";}
+
+                //----------------- Recaptcha -----------------
+
+                // Si los intentos son >=3, validar el reCAPTCHA
+                if ($_SESSION['loginRecaptcha'] >= 3) {
+                    // Realiza la petición a la API de reCAPTCHA
+                    $recaptchaVerify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$clauSecretaRecaptcha&response=$recaptchaResponse");
+                    $recaptchaResult = json_decode($recaptchaVerify, true);
+
+                    if (!$recaptchaResult["success"]) {
+                        $errors[] = "➤ Error amb el reCAPTCHA. Torna-ho a intentar.";
+                    }
+                }
+                
                 if (empty($errors)) {
                     //COMPROVAR USUARI I CONTRASENYA.
                     $existe = comprovarExistensiaDUsuari($usuari);
@@ -29,9 +54,14 @@
                         $correct = password_verify($contrasenya, $existe['contrasenya']); 
                         if ($correct == false){
                             $errors[] = "➤ La contrasenya no es correcta";
+                            //Incrementem els intents de reCAPTCHA.
+                            $_SESSION['loginRecaptcha']++;
                         } else {
+                            //Posem a 0 els intents de reCAPTCHA.
+                            $_SESSION['loginRecaptcha'] = 0;
                             $result = iniciSessio($usuari);
-                            //Guardar dades de l'usuari a la Sesssion.
+
+                            //Guardar dades de l'usuari a la sessió.
                             $_SESSION["loginId"] = $result["id_usuari"];
                             $_SESSION["loginUsuari"] = $result["usuari"];
                             $_SESSION["loginCorreu"] = $result["correu"];

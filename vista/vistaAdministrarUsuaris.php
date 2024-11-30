@@ -26,46 +26,51 @@
         if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" );}
         require_once "../controlador/controladorPaginacio.php";
     ?>
-    <nav>
-        <!-- INICI y GESTIÓ D'ARTICLES -->
-        <div class="left">
-            <a href='../index.php'>INICI</a>
-            <a href="../vista/vistaMenu.php">GESTIÓ DE PERSONATGES</a>
-        </div>
-
-        <!-- PERFIL -->
-        <div class="perfil">
-            <a> 
-                <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "../vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"><?php 
-                    $nomUsuari = $_SESSION["loginUsuari"]; 
-                    echo $nomUsuari;
-                ?> 
-            </a>
-            <div class="dropdown-content">
-                <a href="../vista/vistaPerfil.php">Administrar perfil</a>
-                <a href="../vista/vistaCanviContra.php">Canviar contrasenya</a>
-                <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
+    <div class="content">
+        <nav>
+            <!-- INICI y GESTIÓ D'ARTICLES -->
+            <div class="left">
+                <a href='../index.php'>INICI</a>
+                <a href="../vista/vistaMenu.php">GESTIÓ DE PERSONATGES</a>
             </div>
-        </div>
-    </nav>
-    <div class="usuarios-container">
-        <h2 class="usuarios-titulo">Llistat d'Usuaris</h2>
-        <div class="usuarios-tabla">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Imatge</th>
-                        <th>Usuari</th>
-                        <th>Nom</th>
-                        <th>Cognoms</th>
-                        <th>Correu</th>
-                        <th>Acció</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php echo mostrarUsuaris(); ?>
-                </tbody>
-            </table>
+
+            <!-- PERFIL -->
+            <div class="perfil">
+                <a> 
+                    <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "../vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"><?php 
+                        $nomUsuari = $_SESSION["loginUsuari"]; 
+                        echo $nomUsuari;
+                    ?> 
+                </a>
+                <div class="dropdown-content">
+                    <a href="../vista/vistaPerfil.php">Administrar perfil</a>
+                    <a href="../vista/vistaCanviContra.php">Canviar contrasenya</a>
+                    <?php if ($_SESSION["loginAdministrador"] == 1): ?>
+                        <a href="../vista/vistaAdministrarUsuaris.php">Administrar usuaris</a>
+                    <?php endif; ?>
+                    <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
+                </div>
+            </div>
+        </nav>
+        <div class="usuarios-container">
+            <h2 class="usuarios-titulo">Llistat d'Usuaris</h2>
+            <div class="usuarios-tabla">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Imatge</th>
+                            <th>Usuari</th>
+                            <th>Nom</th>
+                            <th>Cognoms</th>
+                            <th>Correu</th>
+                            <th>Acció</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php echo mostrarUsuaris(); ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>
