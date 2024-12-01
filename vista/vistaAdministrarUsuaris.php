@@ -26,7 +26,7 @@
         if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" );}
         require_once "../controlador/controladorPaginacio.php";
     ?>
-    <div class="content">
+    <div class="content-usuaris">
         <nav>
             <!-- INICI y GESTIÓ D'ARTICLES -->
             <div class="left">

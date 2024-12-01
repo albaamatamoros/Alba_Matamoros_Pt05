@@ -45,13 +45,15 @@
         <form action="../controlador/controladorAdministrarPerfil.php" method="post">
             <h2>Heu oblidat la contrasenya?</h2>
             <div class="info-container">
-                <p>Si us plau, introdueix l'adreça de correu electrònic que vas utilitzar per a registrar-te.</p>
-                <p>T'enviarem un mail amb la teva nova contrasenya.</p>
-                <p>Revisa el correu brossa si no el reps.</p>
+                            <p>Si us plau, introdueix l'adreça de correu electrònic que vas utilitzar per a registrar-te.</p>
+                <p>T'enviarem un mail amb l'enllaç per començar amb el procés de recuperació.</p>
             </div>
             <label for="email">Introdueix el teu correu electrònic:</label>
             <input type="email" id="email" name="email" required>
             <input type="submit" name="action" value="Restablir Contrasenya">
+
+            <!-- CONTROL D'ERRORS -->
+            <?php mostrarMissatge($errors, $correcte) ?>
         </form>
     </div>
 </body>

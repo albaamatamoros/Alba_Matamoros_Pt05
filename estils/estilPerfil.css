@@ -4,13 +4,6 @@
 /* -- ESTILS INICI I REGISTRE --*/
 /* -----------------------------*/
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
 body {
     background-image: url("../vista/imatges/wallpaper.jpg");
     background-repeat: no-repeat;
@@ -22,6 +15,37 @@ body {
     flex-direction: column;
     margin-top: 60px;
 }
+
+/* ------------------------------------- */
+/* -- ESTILS VISTA RESTABLIR CONTRA -- */
+/* ------------------------------------- */
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column; /* Alinea los elementos en columna */
+    justify-content: center; /* Centra los elementos verticalmente */
+    align-items: center; /* Centra los elementos horizontalmente */
+    text-align: center; /* Centra el texto de los <p> */
+}
+
+.container button {
+    margin-top: 20px; /* Añade un espacio por encima del botón si es necesario */
+}
+
+.container p {
+    margin-top: 20px;
+}
+
+/* ----------------------------------- */
+/* -- ESTILS FORMULARI DE REGISTRE -- */
+/* ----------------------------------- */
+
 
 .login-container {
     background-color: #fff;
@@ -202,3 +226,20 @@ body {
     background-color: #ddd;
 }
 
+/*--------- BUTTONS -------- */
+
+.btn {
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    padding: 10px 20px; /* Espaciado */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    font-size: 16px; /* Tamaño del texto */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover */
+.btn:hover {
+    background-color: #555; /* Fondo más claro al pasar por encima */
+}

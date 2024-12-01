@@ -14,24 +14,46 @@
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+        if (!isset($_SESSION['loginId']) && !isset($_GET['token']) && !isset($_SESSION['token'])) {
+            header("Location: ../index.php");
+        }
         require_once "../controlador/controladorErrors.php";
 
         $errors = isset($errors) ? $errors : [];
         $correcte = isset($correcte) ? $correcte : null;
     ?>
-    <body class="main-content">
-        <!-- HEADER -->
-        <nav>
-            <!-- INICI y GESTIÓ D'ARTICLES -->
-            <div class="left">
-                <a href='../index.php'>INICI</a>
-                <a href="../vista/vistaMenu.php">GESTIÓ DE PERSONATGES</a>
-            </div>
+<body>
+    <nav>
+        <!------------------------>
+        <!-- BARRA DE NAVEGACIÓ -->
+        <!------------------------>
 
-            <!-- PERFIL -->
-            <div class="perfil">
-                <a> 
-                    <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "../vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar"><?php 
+        <!-- INICI y GESTIÓ D'ARTICLES -->
+        <div class="left">
+        <a href="../index.php">INICI</a>
+            <!-- Botó activat amb l'inici de sessió fet "GESTIÓ DE PERSONATGES" -->
+            <?php if(isset($_SESSION["loginId"])): ?>
+                <a href="../vista/vistaMenu.php">GESTIÓ DE PERSONATGES</a>
+            <?php endif; ?>
+        </div>
+
+        <!------------>
+        <!-- PERFIL -->
+        <!------------>
+        <div class="perfil">
+            <!-- Botons de perfil -->
+            <?php if (!isset($_SESSION['loginId'])): ?>
+                <a>
+                    <img src="../vista/imatges/imatgesUsers/defaultUser.jpg" class="user-avatar">
+                    PERFIL
+                </a>
+                <div class="dropdown-content">
+                    <a href="../vista/vistaLogin.php">Iniciar sessió</a>
+                    <a href="../vista/vistaRegistrarse.php">Registrar-se</a>
+            <?php else: ?>
+                <a>
+                    <img src="<?php echo isset($_SESSION['loginImage']) ? $_SESSION['loginImage'] : "..vista/imatges/imatgesUsers/defaultUser.jpg" ; ?>" class="user-avatar">
+                    <?php
                         $nomUsuari = $_SESSION["loginUsuari"]; 
                         echo $nomUsuari;
                     ?> 
@@ -43,11 +65,13 @@
                         <a href="../vista/vistaAdministrarUsuaris.php">Administrar usuaris</a>
                     <?php endif; ?>
                     <a href="../controlador/controladorTancarSessio.php">Tancar sessió</a>
-                </div>
+                <?php endif; ?>
             </div>
-        </nav>
-        
-        <!-- BODY -->
+        </div>
+    </nav>
+    
+    <!-- BODY -->
+    <?php if (isset($_SESSION['loginId'])): ?>
         <div class="login-container">
             <h2>Canviar Contrasenya</h2>
             <form action="../controlador/controladorAdministrarPerfil.php" method="POST">
@@ -67,5 +91,31 @@
                 <?php mostrarMissatge($errors, $correcte) ?>
             </form>
         </div>
-    </body>
+    <?php elseif (isset($_GET['token']) || (isset($_SESSION['token']))): ?>
+        <div class="login-container">
+            <h2>Canviar Contrasenya</h2>
+            <form action="../controlador/controladorAdministrarPerfil.php" method="POST">
+
+                <label for="nova_contrasenya">Nova Contrasenya:</label>
+                <input type="password" id="nova_contrasenya" name="nova_contrasenya">
+
+                <label for="confirmar_contrasenya">Confirmar Contrasenya:</label>
+                <input type="password" id="confirmar_contrasenya" name="confirmar_contrasenya">
+
+                <?php if (isset($_GET['token'])): ?>
+                    <input type="hidden" name="token" value="<?php echo isset($_GET['token']) ? $_GET['token'] : ''; ?>">
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['token'])): ?>
+                    <input type="hidden" name="token" value="<?php echo isset($_SESSION['token']) ? $_SESSION['token'] : ''; ?>">
+                <?php endif; ?>
+
+                <input type="submit" name="action" value="Restablir">
+
+                <!-- CONTROL D'ERRORS -->
+                <?php mostrarMissatge($errors, $correcte) ?>
+            </form>
+        </div>
+    <?php endif; ?>
+</body>
 </html>

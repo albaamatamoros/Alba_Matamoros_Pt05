@@ -5,6 +5,11 @@
         session_start();
     }
     require_once "../model/modelUsuaris.php";
+    require "../PHPMailer-master/src/PHPMailer.php";
+    require "../PHPMailer-master/src/Exception.php";
+    require "../PHPMailer-master/src/SMTP.php";
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
     // Array para almacenar errores
     $errors = [];
@@ -137,34 +142,115 @@
                             include "../vista/vistaCanviContra.php"; 
                         }
                     } else { include "../vista/vistaCanviContra.php"; }
+
                     break;
                 case "Restablir Contrasenya":
+
+                    //-------------------------------
+                    //---  RESTABLIR CONTRASENYA  ---
+                    //-------------------------------
+
                     //RESTABLIR CONTRASENYA:
                     $email = htmlspecialchars($_POST["email"]);
 
                     //CONTROL D'ERRORS
-                    if (empty($email)) { $errors[] = "➤ El camp 'email' és obligatori."; }
-                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { $errors[] = "➤ El format de l'email no és correcte."; }
+                    if (empty($email)) { 
+                        $errors[] = "➤ El camp 'email' és obligatori."; 
+                    }
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { 
+                        $errors[] = "➤ El format de l'email no és correcte."; 
+                    }
 
                     //Si errors es buit ->
                     if (empty($errors)) {
-                        //Comprovar si existeix l'email.
+                        //Comprobar si existeix l'email.
                         $existe = comprovarEmail($email);
                         if ($existe == false) {
                             $errors[] = "➤ No existeix aquest usuari.";
                         } else {
-                            //PROGRESSS...........
-                            echo "Email enviat.";   
+                            // Generar un token único
+                            $token = bin2hex(random_bytes(50)); // Crear un token aleatori de 50 caracteres
+                            $expires = time() + 3600; // El token expira en 1 hora (3600 segundos)
+
+                            // Guardar el token y la fecha de expiración en la base de datos
+                            guardarToken($email, $token, $expires);
+
+                            // Preparar el cuerpo del correo
+                            $resetLink = "http://albamatamoros.cat/vista/vistaCanviContra.php?token=" . $token; // Enlace con el token
+                            $text = "Fes clic en el següent enllaç per a restablir la teva contrasenya: " . $resetLink;
+
+                            // Configuración PHPMailer.
+                            $mail = new PHPMailer(true);
+
+                            try {
+                                $mail->isSMTP();
+                                $mail->Host       = 'smtp.gmail.com';
+                                $mail->SMTPAuth   = true;                                
+                                $mail->Username   = 'a.matamoros@sapalomera.cat';            
+                                $mail->Password   = 'kcdm ajyc vqqj eawf';             
+                                $mail->SMTPSecure = 'tls';
+                                $mail->Port       = 587;
+                                
+                                $mail->setFrom('a.matamoros@sapalomera.cat', 'albamatamoros.cat');
+                                $mail->addAddress($email);
+                                
+                                $mail->isHTML(false);
+                                $mail->Subject = 'Restablir Contrasenya';
+                                $mail->Body = $text;
+
+                                $mail->send();
+
+                                $correcte = "➤ S'ha enviat un correu electrònic amb les instruccions per a restablir la teva contrasenya.";
+
+                            } catch (Exception $e) {
+                                $errors[] = "➤ Error en enviar el correu: " . $mail->ErrorInfo;
+                            }
                         }
-                        if (!empty($errors)){ 
-                            include "../vista/vistaRecuperarContrasenya.php"; 
+                    }
+
+                    include "../vista/vistaRecuperarContrasenya.php";
+                    
+                    break;
+                case 'Restablir':
+                    if (isset($_POST['token'])) {
+                        $token = $_POST['token'];
+                        $_SESSION['token'] = $token;
+
+                        $novaContrasenya = (htmlspecialchars($_POST["nova_contrasenya"]));
+                        $confirmarContrasenya = (htmlspecialchars($_POST["confirmar_contrasenya"]));
+
+                        if (empty($novaContrasenya)) { $errors[] = "➤ El camp 'nova_contrasenya' és obligatori."; }
+                        if (empty($confirmarContrasenya)) { $errors[] = "➤ El camp 'confirmar_contrasenya' és obligatori."; }
+
+                        $usuariIdToken = comprovarToken($token);
+                        if ($usuariIdToken == false) {
+                            $errors[] = "➤ L'enllaç a expirat.";
+                            $_SESSION['caducat'] = 1;
+                            header("Location: ../vista/vistaRestablirContra.php");
                         }
-                    } else { include "../vista/vistaRecuperarContrasenya.php"; }
+
+                        //Regex complir contrasenya.
+                        //Comprovar que siguin iguals o que no sigui la mateixa.
+                        elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/', $novaContrasenya)){ $errors[] = "El format de la contrasenya no és correcte."; }
+                        elseif ( $novaContrasenya != $confirmarContrasenya) { $errors[] = "➤ Nova contrasenya i confirmar contrasenya no son iguals."; }
+
+                        if (empty($errors)) {
+                            //Cifrar contrasenya.
+                            $contrasenyaCifrada = password_hash($novaContrasenya, PASSWORD_DEFAULT);
+                            modificarContrasenya($contrasenyaCifrada, $usuariIdToken['id_usuari']);
+                            $_SESSION['correcte'] = 1;
+                            header("Location: ../vista/vistaRestablirContra.php");
+                        }
+                    } else {
+                        $errors[] = "➤ No s'ha pogut restablir la contrasenya.";
+                    }
+
+                    include "../vista/vistaCanviContra.php";
                     break;
                 default:
                     //SI NO AGAFA CAP DADA:
                     $errors[] = "No es pot completar aquesta acció.";
-                    include "../vista/vistaPerfil.php";
+                    include "../index.php";
                     break;
             }
         } catch (Exception $e) {

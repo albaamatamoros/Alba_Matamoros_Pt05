@@ -99,6 +99,37 @@
         }
     }
 
+    function comprovarToken($token) {
+        $connexio = connexio(); // Obtén la conexión a la base de datos
+
+        // Preparamos la consulta SQL para buscar el token y verificar su tiempo de validez
+        $statement = $connexio->prepare('
+            SELECT * 
+            FROM usuaris 
+            WHERE token = :token AND token_time > :current_time
+        ');
+        
+        // Asociamos los valores a los parámetros
+        $statement->bindParam(':token', $token); // Token a buscar
+        $currentTime = time(); // Tiempo actual en formato UNIX
+        $statement->bindParam(':current_time', $currentTime); // Tiempo para comparar
+        
+        // Ejecutamos la consulta
+        $statement->execute();
+        
+        // Obtenemos el resultado
+        $result = $statement->fetch();
+        
+        if ($result) {
+            // Si encontramos un resultado, devolvemos los datos del usuario
+            return $result;
+        } else {
+            // Si no encontramos un resultado o el token ha expirado, devolvemos false
+            return false;
+        }
+    }
+    
+
     //********************************************************
     //INSERT
 
@@ -166,6 +197,21 @@
         }catch (Exception $e){
             echo "Error: " . $e->getMessage();
         }
+    }
+
+    function guardarToken($email, $token, $expires) {
+        try {
+            $connexio = connexio();
+    
+            $statement = $connexio->prepare("UPDATE usuaris SET token = :token, token_time = :token_time WHERE correu = :correu");
+            $statement->bindParam(':token', $token);
+            $statement->bindParam(':token_time', $expires); // Guardamos el tiempo de expiración
+            $statement->bindParam(':correu', $email);
+            $statement->execute();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        
     }
 
     //********************************************************

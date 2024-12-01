@@ -108,3 +108,12 @@ nav .perfil .dropdown-content a:hover {
     margin-right: 8px; /* Espacio entre la imagen y el nombre */
     vertical-align: middle; /* Alinea la imagen con el texto */
 }
+
+/* -------------------------------------- */
+/* -------- ADMINISTRAR USUARIOS -------- */
+/* -------------------------------------- */
+
+.content-usuaris {
+    margin-top: 30rem; /* Ajusta este valor según la altura de tu barra (10px padding + 60px aprox.) */
+    padding: 20px; /* Para dar espacio dentro del contenido */
+}

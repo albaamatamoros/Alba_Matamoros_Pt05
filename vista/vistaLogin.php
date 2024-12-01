@@ -55,8 +55,10 @@
             <?php endif; ?>
 
             <input type="submit" name="action" value="Iniciar sessió">
-
-            <a href="../vista/vistaRecuperarContrasenya.php">Heu oblidat la contrasenya?</a>
+            
+            <div class="info-container">
+                <a href="../vista/vistaRecuperarContrasenya.php">Heu oblidat la contrasenya?</a>
+            </div>
         </form>
 
         <!-- CONTROL D'ERRORS -->
