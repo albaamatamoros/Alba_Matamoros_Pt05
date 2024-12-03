@@ -1,10 +1,18 @@
 <?php 
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {  
-        setcookie("personatgesCookie", $_POST['select'], 0);
-        header("Location: ../vista/vistaConsultar.php");
-    } else if (!isset($_COOKIE['personatgesCookie'])) {
-        setcookie("personatgesCookie", 5 , 0);
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if (isset($_POST['select'])) {  
+            setcookie("personatgesCookie", $_POST['select'], 0);
+            header("Location: ../vista/vistaConsultar.php");
+        } 
+    
+        if (isset($_POST['selectOrdenacio'])) {
+            setcookie("ordenacioCookie", $_POST['selectOrdenacio'], 0);
+            header("Location: ../vista/vistaConsultar.php");
+        }
     }
+
+    if (!isset($_COOKIE['personatgesCookie'])) { setcookie("personatgesCookie", 5, 0); }
+    if (!isset($_COOKIE['ordenacioCookie'])) { setcookie("ordenacioCookie", "ASC", 0); }
     require_once '../controlador/controladorPaginacio.php';
 ?>
 <!DOCTYPE html>
@@ -70,6 +78,18 @@
                 </form>
             </div>
 
+            <div class="selectPersonatgeOrdenacio">
+                <form action="" method="POST">
+                    <select name="selectOrdenacio" onchange="this.form.submit()">
+                        <?php foreach(["ASC", "DESC"] as $ordenacio): ?>
+                            <option value="<?php echo $ordenacio; ?>" <?php if (isset($_COOKIE['ordenacioCookie']) && $_COOKIE['ordenacioCookie'] == $ordenacio) echo 'selected'; ?>>
+                                <?php echo $ordenacio; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </form>
+            </div>
+
             <!-- Titulo -->
             <div class="titulo"> <h1 class="titulo-personatges">Llista de Personatges Global</h1></div>
             
@@ -78,7 +98,7 @@
             <!---------------->
             <div class="search-bar-container">
                 <form method="GET" action="vistaConsultar.php" class="search-form">
-                    <input type="search" name="search" placeholder="Cerca..." class="search-input"/>
+                    <input type="search" name="search" placeholder="Cerca..." class="search-input" value="<?php echo $cerca; ?>"/>
                     <button type="submit" class="search-button">🔍</button>
                 </form>
             </div>

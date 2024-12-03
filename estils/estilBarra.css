@@ -4,6 +4,10 @@
 /* -- BARRA SUPERIOR --*/
 /* --------------------*/
 
+elemento {
+    --main-bg-color: #333;
+}
+
 body {
     background-image: url("../vista/imatges/wallpaper.jpg");
     background-repeat: no-repeat;

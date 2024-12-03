@@ -19,15 +19,19 @@
     //Si es null, la pagina per defecte sera 1.
     $paginaActual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 
-    if (isset($_SESSION['loginId']) && !str_contains($_SERVER['SCRIPT_NAME'], '/vista')){
+
+    //PER USUARI
+    if (isset($_SESSION['loginId']) && isset($_GET['search']) && $_GET['search'] != "" && !str_contains($_SERVER['SCRIPT_NAME'], '/vista')) {
+        $totalPersonatges = cercaCountPersonatgesUsuari($_GET['search'], $_SESSION['loginId']);
+    } elseif (isset($_SESSION['loginId']) && !str_contains($_SERVER['SCRIPT_NAME'], '/vista')){
         $totalPersonatges = countPersonatgesPerUsuari($_SESSION['loginId']);
     } else if (isset($_GET['search'])){
         $totalPersonatges = cercaCountPersonatges($_GET['search']);
-    } else if (isset($_SESSION['loginId']) && isset($_GET['search'])){
-        $totalPersonatges = cercaCountPersonatgesUsuari($_GET['search'], $_SESSION['loginId']);
     } else {
         $totalPersonatges = countPersonatges();
     }
+    
+    $cerca = isset($_GET['search']) ? $_GET['search'] : "";
 
     $totalPagines = ceil($totalPersonatges / PERSONATGES_PER_PAGINA);
 
@@ -37,6 +41,7 @@
     } elseif ($paginaActual > $totalPagines) {
         $paginaActual = $totalPagines;
     }
+
     //-----------------------------------------
 
     //--------------------------
@@ -51,23 +56,24 @@
     function retornarLinksPerUsuari(){
         global $paginaActual;
         global $totalPagines;
+        global $cerca;
 
         $mostrarPaginacio = "";
 
         //PAGINACIO BOTONS.
         //Boto Anterior.
-        if ($paginaActual > 1){ $mostrarPaginacio .= sprintf("<a class='activat' href='%s?pagina=%d'>Anterior</a>",$_SERVER['PHP_SELF'], $paginaActual - 1); }
-        else { $mostrarPaginacio .= "<a class='desactivat'>Anterior</a>"; }
+        if ($paginaActual > 1){ $mostrarPaginacio .= sprintf("<a class='activat' href='%s?search=%s&pagina=%d'>Anterior</a>",$_SERVER['PHP_SELF'], $cerca, $paginaActual - 1); 
+        } else { $mostrarPaginacio .= "<a class='desactivat'>Anterior</a>"; }
 
         //Botons intermitjos, 1,2,3...
         for ($i = 1; $i <= $totalPagines; $i++ ){
             if ($i == $paginaActual){
                 $mostrarPaginacio .= sprintf("<a class='desactivado'>%d</a>", $i);
-            } else { $mostrarPaginacio .= sprintf("<a class='activat' href='%s?pagina=%d'>%d</a>",$_SERVER['PHP_SELF'], $i, $i); }
+            } else { $mostrarPaginacio .= sprintf("<a class='activat' href='%s?search=%s&pagina=%d'>%d</a>",$_SERVER['PHP_SELF'], $cerca, $i, $i); }
         }
 
         //Boto Següent.
-        if ($paginaActual < $totalPagines){ $mostrarPaginacio .= sprintf("<a class='activat' href='%s?pagina=%d'>Següent</a>",$_SERVER['PHP_SELF'], $paginaActual + 1); }
+        if ($paginaActual < $totalPagines){ $mostrarPaginacio .= sprintf("<a class='activat' href='%s?search=%s&pagina=%d'>Següent</a>",$_SERVER['PHP_SELF'], $cerca, $paginaActual + 1); }
         else { $mostrarPaginacio .= "<a class='desactivat'>Següent</a>"; }
 
         return $mostrarPaginacio;
@@ -84,9 +90,20 @@
 
         if (!empty($_GET['search'])) {
             $cerca = trim($_GET['search']);
-            $personatges = cercaPersonatgesUsuari($cerca, $_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
+            if ($_COOKIE['ordenacioCookie'] == "ASC") {
+                //ASC
+                $personatges = cercaPersonatgesUsuari($cerca, $_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
+            } else {
+                //DESC
+                $personatges = cercaPersonatgesUsuariDESC($cerca, $_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
+            }
         } else {
-            $personatges = consultarPerUsuariPaginacio($_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
+            if ($_COOKIE['ordenacioCookie'] == "ASC") {
+                //ASC
+                $personatges = consultarPerUsuariPaginacio($_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
+            } else {
+                $personatges = consultarPerUsuariPaginacioDESC($_SESSION['loginId'], $paginaActual, PERSONATGES_PER_PAGINA);
+            }
         }
 
         if (!empty($personatges)) {
@@ -116,23 +133,24 @@
     function retornarLinksGlobal(){
         global $paginaActual;
         global $totalPagines;
+        global $cerca;
 
         $mostrarPaginacio = "";
 
         //PAGINACIO BOTONS.
         //Boto Anterior.
-        if ($paginaActual > 1){ $mostrarPaginacio .= sprintf("<a class='activat' href='%s?pagina=%d'>Anterior</a>",$_SERVER['PHP_SELF'], $paginaActual - 1); }
+        if ($paginaActual > 1){ $mostrarPaginacio .= sprintf("<a class='activat' href='%s?search=%s&pagina=%d'>Anterior</a>",$_SERVER['PHP_SELF'], $cerca, $paginaActual - 1); }
         else { $mostrarPaginacio .= "<a class='desactivat'>Anterior</a>"; }
 
         //Botons intermitjos, 1,2,3...
         for ($i = 1; $i <= $totalPagines; $i++ ){
             if ($i == $paginaActual){
                 $mostrarPaginacio .= sprintf("<a class='desactivado'>%d</a>", $i);
-            } else { $mostrarPaginacio .= sprintf("<a class='activat' href='%s?pagina=%d'>%d</a>",$_SERVER['PHP_SELF'], $i, $i); }
+            } else { $mostrarPaginacio .= sprintf("<a class='activat' href='%s?search=%s&pagina=%d'>%d</a>",$_SERVER['PHP_SELF'], $cerca, $i, $i); }
         }
 
         //Boto Següent.
-        if ($paginaActual < $totalPagines){ $mostrarPaginacio .= sprintf("<a class='activat' href='%s?pagina=%d'>Següent</a>",$_SERVER['PHP_SELF'], $paginaActual + 1); }
+        if ($paginaActual < $totalPagines){ $mostrarPaginacio .= sprintf("<a class='activat' href='%s?search=%s&pagina=%d'>Següent</a>",$_SERVER['PHP_SELF'], $cerca, $paginaActual + 1); }
         else { $mostrarPaginacio .= "<a class='desactivat'>Següent</a>"; }
 
         return $mostrarPaginacio;
@@ -149,9 +167,21 @@
 
         if (!empty($_GET['search'])) {
             $cerca = trim($_GET['search']);
-            $personatges = cercaPersonatgesGlobal($cerca, $paginaActual, PERSONATGES_PER_PAGINA);
+            if ($_COOKIE['ordenacioCookie'] == "ASC") {
+                //ASC
+                $personatges = cercaPersonatgesGlobal($cerca, $paginaActual, PERSONATGES_PER_PAGINA);
+            } else {
+                //DESC 
+                $personatges = cercaPersonatgesGlobalDESC($cerca, $paginaActual, PERSONATGES_PER_PAGINA);
+            }          
         } else {
-            $personatges = consultarPaginacio($paginaActual, PERSONATGES_PER_PAGINA);
+            if ($_COOKIE['ordenacioCookie'] == "ASC") {
+                //ASC
+                $personatges = consultarPaginacio($paginaActual, PERSONATGES_PER_PAGINA);
+            } else {
+                //DESC
+                $personatges = consultarPaginacioDESC($paginaActual, PERSONATGES_PER_PAGINA); 
+            } 
         }
 
         if (!empty($personatges)) {

@@ -15,7 +15,7 @@
 
                 $nom = htmlspecialchars(($_POST["nom"]));
                 $cognoms = htmlspecialchars(($_POST["cognoms"]));
-                $usuari = htmlspecialchars(($_POST["usuari"]));
+                $usuari = trim(htmlspecialchars($_POST["usuari"]));
                 $email = htmlspecialchars(($_POST["email"]));
                 $contrasenya = htmlspecialchars(($_POST["contrasenya"]));
                 $confirmar_contrasenya = htmlspecialchars(($_POST["confirmar_contrasenya"]));
@@ -27,12 +27,12 @@
  
                 //CORREU
                 if (empty($email)) { $errors[] = "➤ El camp 'correu' és obligatori"; } 
-                elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)){ $errors[] = "➤ El camp 'correu' no te un format correcte"; }
+                elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)){ $errors[] = "➤ La contrasenya ha de tenir almenys una minúscula, una majúscula, un número, un caràcter especial i un mínim de 8 caràcters"; }
                 
                 //CONTRASENYA
                 if (empty($contrasenya)) { $errors[] = "➤ El camp 'contrasenya' és obligatori"; }
                 //Regex compir contrasenya.
-                elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/', $contrasenya)){ $errors[] = "➤ El format de la contrasenya no és correcte."; }
+                elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/', $contrasenya)){ $errors[] = "➤ La contrasenya ha de tenir almenys una minúscula, una majúscula, un número, un caràcter especial i un mínim de 8 caràcters."; }
                 if (empty($confirmar_contrasenya)) { $errors[] = "➤ El camp 'confirmar contrasenya' és obligatori"; }
                 elseif ( $contrasenya != $confirmar_contrasenya) { $errors[] = "➤ Contrasenya i confirmar contrasenya no son iguals"; }
                 //Cifrar contrasenya.

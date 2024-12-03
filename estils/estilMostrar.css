@@ -192,7 +192,10 @@ a.desactivado {
     color: #eeeeee; 
 }
 
+/* -----------------------------------  */
 /* FORM SELECCIO PERSONATGE SPER PAGINA */
+/* -----------------------------------  */
+
 .selectPersonatge {
     position: absolute; /* Permite colocarlo con mayor precisión */
     top: 200px; /* Ajusta según tu diseño */
@@ -230,6 +233,53 @@ a.desactivado {
 /* Adaptaciones para pantallas pequeñas */
 @media (max-width: 480px) {
     .selectPersonatge select {
+        font-size: 0.8rem; /* Reduce aún más el tamaño en móviles */
+        padding: 6px;
+    }
+}
+
+/* -----------------------------------  */
+/* SELECCIONAR PERSONAJES ORDENACIO */
+/* -----------------------------------  */
+
+
+.selectPersonatgeOrdenacio {
+    position: absolute; /* Permite colocarlo con mayor precisión */
+    top: 200px; /* Ajusta según tu diseño */
+    right: 200px; /* Mueve el botón completamente hacia la izquierda */
+    z-index: 10; /* Asegura que esté por encima de otros elementos */
+    display: flex; 
+    align-items: center;
+    justify-content: flex-start; /* Alineación hacia la izquierda */
+}
+
+.selectPersonatgeOrdenacio select {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f4f4f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease; /* Transición suave para cambios */
+}
+
+/* Adaptaciones para pantallas medianas */
+@media (max-width: 768px) {
+    .selectPersonatgeOrdenacio {
+        flex-direction: column; /* Acomoda el contenido en columna en pantallas más pequeñas */
+        margin: 10px auto; /* Reduce el margen */
+    }
+
+    .selectPersonatgeOrdenacio select {
+        font-size: 0.9rem; /* Ajusta el tamaño de fuente */
+        padding: 8px;
+        max-width: 90%; /* Limita el ancho para pantallas pequeñas */
+    }
+}
+
+/* Adaptaciones para pantallas pequeñas */
+@media (max-width: 480px) {
+    .selectPersonatgeOrdenacio select {
         font-size: 0.8rem; /* Reduce aún más el tamaño en móviles */
         padding: 6px;
     }

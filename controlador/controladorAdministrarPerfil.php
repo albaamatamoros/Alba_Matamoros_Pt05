@@ -28,7 +28,7 @@
                     //---------------------------
 
                     //CANVIAR USUARIO:
-                    $nomUsuari = htmlspecialchars($_POST["username"]);
+                    $nomUsuari = trim(htmlspecialchars($_POST["username"]));
                     $usuariId = htmlspecialchars($_SESSION["loginId"]);
 
                     if (empty($nomUsuari)) {
@@ -53,15 +53,14 @@
                         }
                     }
 
-                    $tipusImatge = $_FILES['arxiu']['type'];
-                    if ($tipusImatge != 'image/png' && $tipusImatge != 'image/jpg' && $tipusImatge != 'image/jpeg') {
-                        $errors[] = "➤ Tipus d'arxiu no permès. Només es permeten PNG i JPG.";
-                    }
-
                     //-------- MODIFICAR IMATGE -------
-                    if (empty($errors)) {
-                        // CANVIAR/AFEGIR IMATGE:
-                        if ($_FILES["arxiu"]["name"] != "") {
+                    if ($_FILES["arxiu"]["name"] != "") {
+
+                        $tipusImatge = $_FILES['arxiu']['type'];
+                        if ($tipusImatge != 'image/png' && $tipusImatge != 'image/jpg' && $tipusImatge != 'image/jpeg') { $errors[] = "➤ Tipus d'arxiu no permès. Només es permeten PNG i JPG."; }
+
+                        if (empty($errors)) {
+                            // CANVIAR/AFEGIR IMATGE:
                             if ($_FILES['arxiu']['error'] == 0) {
                                 // Obtener detalles de la imagen
                                 $nomImatge = $_FILES['arxiu']['name'];

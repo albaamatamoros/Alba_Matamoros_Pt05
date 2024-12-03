@@ -1,10 +1,20 @@
 <?php 
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {  
-        setcookie("personatgesCookie", $_POST['select'], 0);
-        header("Location: .");
-    } else if (!isset($_COOKIE['personatgesCookie'])) {
-        setcookie("personatgesCookie", 5 , 0);
+    //Crear cookies per recordar les preferencies d'usuari a l'hora de mostrar x personatges per pantalla. i ordenació.
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if (isset($_POST['select'])) {  
+            setcookie("personatgesCookie", $_POST['select'], 0);
+            header("Location: .");
+        } 
+    
+        if (isset($_POST['selectOrdenacio'])) {
+            setcookie("ordenacioCookie", $_POST['selectOrdenacio'], 0);
+            header("Location: .");
+        }
     }
+
+    if (!isset($_COOKIE['personatgesCookie'])) { setcookie("personatgesCookie", 5, 0); }
+    if (!isset($_COOKIE['ordenacioCookie'])) { setcookie("ordenacioCookie", "ASC", 0); }
+
     require_once './controlador/controladorPaginacio.php';
 ?>
 <!DOCTYPE html>
@@ -101,12 +111,25 @@
                         </select>
                     </form>
                 </div>
+
+                <div class="selectPersonatgeOrdenacio">
+                    <form action="" method="POST">
+                        <select name="selectOrdenacio" onchange="this.form.submit()">
+                            <?php foreach(["ASC", "DESC"] as $ordenacio): ?>
+                                <option value="<?php echo $ordenacio; ?>" <?php if (isset($_COOKIE['ordenacioCookie']) && $_COOKIE['ordenacioCookie'] == $ordenacio) echo 'selected'; ?>>
+                                    <?php echo $ordenacio; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </form>
+                </div>
             <!----------------------->
             <!-- Search bar global -->
             <!----------------------->
+
             <div class="search-bar-container">
                 <form method="GET" action="index.php" class="search-form">
-                    <input type="search" name="search" placeholder="Cerca..." class="search-input"/>
+                    <input type="search" name="search" placeholder="Cerca..." class="search-input" value="<?php echo $cerca; ?>"/>
                     <button type="submit" class="search-button">🔍</button>
                 </form>
             </div>
@@ -157,8 +180,20 @@
             <!----------------------->
             <div class="search-bar-container">
                 <form method="GET" action="index.php" class="search-form">
-                    <input type="search" name="search" placeholder="Cerca..." class="search-input"/>
+                    <input type="search" name="search" placeholder="Cerca..." class="search-input" value="<?php echo $cerca; ?>"/>
                     <button type="submit" class="search-button">🔍</button>
+                </form>
+            </div>
+
+            <div class="selectPersonatgeOrdenacio">
+                <form action="" method="POST">
+                    <select name="selectOrdenacio" onchange="this.form.submit()">
+                        <?php foreach(["ASC", "DESC"] as $ordenacio): ?>
+                            <option value="<?php echo $ordenacio; ?>" <?php if (isset($_COOKIE['ordenacioCookie']) && $_COOKIE['ordenacioCookie'] == $ordenacio) echo 'selected'; ?>>
+                                <?php echo $ordenacio; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </form>
             </div>
 
