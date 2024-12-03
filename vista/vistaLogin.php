@@ -18,6 +18,10 @@
         if (isset($_SESSION["loginId"])) { header("Location: ../index.php" ); }
         require_once "../controlador/controladorErrors.php";
 
+        if (isset($_COOKIE['usuariNom']))
+
+        var_dump($_COOKIE['usuariNom']);
+
         $errors = isset($errors) ? $errors : [];
         $correcte = isset($correcte) ? $correcte : null;
     ?>
@@ -43,7 +47,7 @@
         <h2>Iniciar sessió</h2>
         <form action="../controlador/controladorLogin.php" method="POST">
             <label for="usuari">Nom d'Usuari:</label>
-            <input type="text" id="usuari" name="usuari">
+            <input type="text" id="usuari" name="usuari" value="<?php if (isset($_COOKIE['usuariNom'])) echo $_COOKIE['usuariNom'] ?>">
 
             <label for="contrasenya">Contrasenya:</label>
             <input type="password" id="contrasenya" name="contrasenya">
@@ -53,6 +57,9 @@
                     <div class="g-recaptcha" data-sitekey="6LeA3owqAAAAADrlORuAb9IM9WI7O29mDUwJ0IDP"></div>
                 </div>
             <?php endif; ?>
+
+            <input type="checkbox" id="recorda" name="recorda">
+            <label for="recorda">Recorda'm</label>
 
             <input type="submit" name="action" value="Iniciar sessió">
             

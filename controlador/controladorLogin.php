@@ -27,6 +27,7 @@
                 $usuari = htmlspecialchars(($_POST["usuari"]));
                 $contrasenya = htmlspecialchars(($_POST["contrasenya"]));
                 $recaptchaResponse = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : null;
+                $remember = isset($_POST["recorda"]) ? true : false;
                 
                 //Comprovar dades.
                 if (empty($usuari)) { $errors[] = "➤ No pots iniciar sessió amb un usuari buit."; } 
@@ -51,14 +52,21 @@
                     if ($existe == false) {
                         $errors[] = "➤ No existeix aquest usuari";
                     } else { 
-                        $correct = password_verify($contrasenya, $existe['contrasenya']); 
-                        if ($correct == false){
+                        $correct = password_verify($contrasenya, $existe['contrasenya']);
+                        if (!$correct) {
                             $errors[] = "➤ La contrasenya no es correcta";
                             //Incrementem els intents de reCAPTCHA.
                             $_SESSION['loginRecaptcha']++;
                         } else {
                             //Posem a 0 els intents de reCAPTCHA.
                             $_SESSION['loginRecaptcha'] = 0;
+
+                            if ($remember) {
+                                //Crear cookie amb el nom d'usuari.
+                                setcookie("usuariNom", $usuari, time() + 60 * 60 * 24 * 30, "/");
+                            }
+
+                            //Iniciar sessió.
                             $result = iniciSessio($usuari);
 
                             //Guardar dades de l'usuari a la sessió.
