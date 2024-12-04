@@ -5,9 +5,9 @@
         session_start();
     }
     require_once "../model/modelUsuaris.php";
-    require "../PHPMailer-master/src/PHPMailer.php";
-    require "../PHPMailer-master/src/Exception.php";
-    require "../PHPMailer-master/src/SMTP.php";
+    require "../lib/PHPMailer-master/src/PHPMailer.php";
+    require "../lib/PHPMailer-master/src/Exception.php";
+    require "../lib/PHPMailer-master/src/SMTP.php";
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\Exception;
 
@@ -167,6 +167,7 @@
                         if ($existe == false) {
                             $errors[] = "➤ No existeix aquest usuari.";
                         } else {
+                            $_SESSION['emailToken'] = $email;
                             // Generar un token único
                             $token = bin2hex(random_bytes(50)); // Crear un token aleatori de 50 caracteres
                             $expires = time() + 3600; // El token expira en 1 hora (3600 segundos)
@@ -176,7 +177,32 @@
 
                             // Preparar el cuerpo del correo
                             $resetLink = "http://albamatamoros.cat/vista/vistaCanviContra.php?token=" . $token; // Enlace con el token
-                            $text = "Fes clic en el següent enllaç per a restablir la teva contrasenya: " . $resetLink;
+                            
+                            $text = "
+                            <!DOCTYPE html>
+                            <html lang='ca'>
+                            <head>
+                                <meta charset='UTF-8'>
+                                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                                <title>Restabliment de contrasenya</title>
+                            </head>
+                            <body style='font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f9f9f9; color: #333;'>
+                                <div style='max-width: 600px; margin: 20px auto; background: #ffffff; border: 1px solid #ddd; border-radius: 8px; padding: 20px;'>
+                                    <h2 style='color: #444; text-align: center;'>Restabliment de la contrasenya</h2>
+                                    <p>Benvolgut/da,</p>
+                                    <p>Hem rebut una sol·licitud per restablir la contrasenya del teu compte. Si us plau, fes clic al botó següent per a restablir-la:</p>
+                                    <div style='text-align: center; margin: 20px 0;'>
+                                        <a href='$resetLink' style='background-color: #007bff; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 4px; font-size: 16px;'>Restablir contrasenya</a>
+                                    </div>
+                                    <p>O també pots copiar i enganxar aquest enllaç al teu navegador:</p>
+                                    <p><a href='$resetLink' style='color: #007bff;'>$resetLink</a></p>
+                                    <hr style='border: none; border-top: 1px solid #eee; margin: 20px 0;'>
+                                    <p style='font-size: 12px; color: #999;'>Si no has sol·licitat aquest canvi, ignora aquest correu electrònic. Per a qualsevol dubte o incidència, contacta amb nosaltres.</p>
+                                    <p style='text-align: center; font-size: 12px; color: #bbb;'>L'equip d'Alba Matamoros</p>
+                                </div>
+                            </body>
+                            </html>
+                            ";
 
                             // Configuración PHPMailer.
                             $mail = new PHPMailer(true);
@@ -193,7 +219,7 @@
                                 $mail->setFrom('a.matamoros@sapalomera.cat', 'albamatamoros.cat');
                                 $mail->addAddress($email);
                                 
-                                $mail->isHTML(false);
+                                $mail->isHTML(true);
                                 $mail->Subject = 'Restablir Contrasenya';
                                 $mail->Body = $text;
 
@@ -226,6 +252,17 @@
                             $errors[] = "➤ L'enllaç a expirat.";
                             $_SESSION['caducat'] = 1;
                             header("Location: ../vista/vistaRestablirContra.php");
+                        }
+                        // } elseif ($usuariIdToken['correu'] != $_SESSION['emailToken']) {
+                        //     $errors[] = "➤ El correu que a demanat el canvi de contrasenya no coincideix amb el correu del token.";
+                        // }
+
+                        $correct = password_verify($novaContrasenya, $usuariIdToken['contrasenya']);
+                        var_dump($correct);
+                        var_dump($novaContrasenya);
+                        var_dump($usuariIdToken['contrasenya']);
+                        if ($correct == true) {
+                            $errors[] = "➤ La contrasenya nova no pot ser igual que l'actual.";
                         }
 
                         //Regex complir contrasenya.

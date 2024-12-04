@@ -23,7 +23,7 @@
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        if (!isset($_SESSION["loginId"])) { header("Location: ../index.php" );}
+        if (!isset($_SESSION["loginId"])) { header("Location: ../vista/errors/vistaError403.php" );}
         require_once "../controlador/controladorPaginacio.php";
     ?>
     <div class="content-usuaris">

@@ -100,31 +100,19 @@
     }
 
     function comprovarToken($token) {
-        $connexio = connexio(); // Obtén la conexión a la base de datos
+        $connexio = connexio();
 
-        // Preparamos la consulta SQL para buscar el token y verificar su tiempo de validez
-        $statement = $connexio->prepare('
-            SELECT * 
-            FROM usuaris 
-            WHERE token = :token AND token_time > :current_time
-        ');
+        $statement = $connexio->prepare(' SELECT * FROM usuaris WHERE token = :token AND token_time > :current_time');
         
-        // Asociamos los valores a los parámetros
-        $statement->bindParam(':token', $token); // Token a buscar
-        $currentTime = time(); // Tiempo actual en formato UNIX
-        $statement->bindParam(':current_time', $currentTime); // Tiempo para comparar
-        
-        // Ejecutamos la consulta
+        $statement->bindParam(':token', $token);
+        $currentTime = time();
+        $statement->bindParam(':current_time', $currentTime);
         $statement->execute();
-        
-        // Obtenemos el resultado
         $result = $statement->fetch();
         
         if ($result) {
-            // Si encontramos un resultado, devolvemos los datos del usuario
             return $result;
         } else {
-            // Si no encontramos un resultado o el token ha expirado, devolvemos false
             return false;
         }
     }
