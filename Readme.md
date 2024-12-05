@@ -4,8 +4,6 @@ Si vols fer proves amb usuaris ja creats tots tenen el pasword = P@ssw0rd
 
 # Taula d'usuaris i contrasenyes
 
-# Taula d'usuaris i contrasenyes
-
 | **Usuari**      | **Rol**      | **Contrasenya**  |
 |------------------|--------------|------------------|
 | ppan            | Admin       | P@ssw0rd         |
