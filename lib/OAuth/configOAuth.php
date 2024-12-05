@@ -2,7 +2,7 @@
     require_once __DIR__ . '/../../env.php';
     require "../lib/OAuth/vendor/autoload.php";
 
-    $client = new Google\Client;
+    $client = new Google\Client;asdasd
 
     $client->setClientId(ID_GOOGLE_LOCALHOST);
     $client->setClientSecret(SECRET_GOOGLE_LOCALHOST);
