@@ -20,8 +20,6 @@
 
         if (isset($_COOKIE['usuariNom']))
 
-        var_dump($_COOKIE['usuariNom']);
-
         $errors = isset($errors) ? $errors : [];
         $correcte = isset($correcte) ? $correcte : null;
 

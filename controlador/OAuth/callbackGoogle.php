@@ -7,9 +7,9 @@
 
     $client = new Google\Client;
 
-    $client->setClientId("ID_GOOGLE_LOCALHOST");
-    $client->setClientSecret("SECRET_GOOGLE_LOCALHOST");
-    $client->setRedirectUri("URL_GOOGLE_LOCALHOST");
+    $client->setClientId(ID_GOOGLE_LOCALHOST);
+    $client->setClientSecret(SECRET_GOOGLE_LOCALHOST);
+    $client->setRedirectUri(URL_GOOGLE_LOCALHOST);
 
     if ( ! isset($_GET["code"])) {
 

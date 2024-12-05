@@ -38,7 +38,9 @@
                 </a>
                 <div class="dropdown-content">
                     <a href="../vista/vistaPerfil.php">Administrar perfil</a>
-                    <a href="../vista/vistaCanviContra.php">canviar contrasenya</a>
+                    <?php if (!isset($_SESSION["loginAutentificacio"])): ?>
+                        <a href="../vista/vistaCanviContra.php">Canviar contrasenya</a>
+                    <?php endif; ?>
                     <?php if ($_SESSION["loginAdministrador"] == 1): ?>
                         <a href="../vista/vistaAdministrarUsuaris.php">Administrar usuaris</a>
                     <?php endif; ?>

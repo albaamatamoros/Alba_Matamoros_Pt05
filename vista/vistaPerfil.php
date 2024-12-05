@@ -39,7 +39,9 @@
                 </a>
                 <div class="dropdown-content">
                     <a href="../vista/vistaPerfil.php">Administrar perfil</a>
-                    <a href="../vista/vistaCanviContra.php">Canviar contrasenya</a>
+                    <?php if (!isset($_SESSION["loginAutentificacio"])): ?>
+                        <a href="../vista/vistaCanviContra.php">Canviar contrasenya</a>
+                    <?php endif; ?>
                     <?php if ($_SESSION["loginAdministrador"] == 1): ?>
                         <a href="../vista/vistaAdministrarUsuaris.php">Administrar usuaris</a>
                     <?php endif; ?>
@@ -58,17 +60,28 @@
                 <label for="arxiu">Selecciona un arxiu:</label>
                 <input type="file" name="arxiu" id="arxiu">
 
-                <label for="username">Nombre de Usuario</label>
-                <input type="text" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>">
-                
-                <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" value="<?php echo isset($_SESSION["loginNom"]) ? $_SESSION["loginNom"] : ''; ?>" readonly disabled>
+                <?php if (!isset($_SESSION["loginAutentificacio"])): ?>
+                    <label for="username">Nombre de Usuario</label>
+                    <input type="text" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>">
+                <?php else: ?>
+                    <label for="username">Nombre de Usuario</label>
+                    <input type="text" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>" readonly disabled>
+                <?php endif; ?>
 
-                <label for="cognom">Cognoms</label>
-                <input type="text" id="cognom" name="cognom" value="<?php echo isset($_SESSION["loginCognom"]) ? $_SESSION["loginCognom"] : ''; ?>" readonly disabled>
+                <?php if (isset($_SESSION["loginNom"]) && $_SESSION["loginNom"] != ""): ?>
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="nom" value="<?php echo isset($_SESSION["loginNom"]) ? $_SESSION["loginNom"] : ''; ?>" readonly disabled>
+                    <?php endif; ?>
 
-                <label for="email">Correo Electrónico</label>
-                <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["loginCorreu"]) ? $_SESSION["loginCorreu"] : ''; ?>" readonly disabled>
+                <?php if (isset($_SESSION["loginCognom"]) && $_SESSION["loginCognom"] != ""): ?>
+                    <label for="cognom">Cognoms</label>
+                    <input type="text" id="cognom" name="cognom" value="<?php echo isset($_SESSION["loginCognom"]) ? $_SESSION["loginCognom"] : ''; ?>" readonly disabled>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION["loginCorreu"]) && $_SESSION["loginCorreu"] != ""): ?>
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" name="email" value="<?php echo isset($_SESSION["loginCorreu"]) ? $_SESSION["loginCorreu"] : ''; ?>" readonly disabled>
+                <?php endif; ?>
                 
                 <!-- CONTROL D'ERRORS -->
                 <?php mostrarMissatge($errors, $correcte) ?>

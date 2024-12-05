@@ -166,16 +166,16 @@
                         $existe = comprovarEmail($email);
                         if ($existe == false) {
                             $errors[] = "➤ No existeix aquest usuari.";
+                        } elseif ($existe['autentificacio'] != ""){
+                            $errors[] = "➤ Aquest usuari ha iniciat sessió amb una plataforma externa, no es pot canviar la contrasenya.";
                         } else {
                             $_SESSION['emailToken'] = $email;
                             // Generar un token único
                             $token = bin2hex(random_bytes(50)); // Crear un token aleatori de 50 caracteres
-                            $expires = time() + 3600; // El token expira en 1 hora (3600 segundos)
+                            $expires = time() + 3600; // El token expira en 1 hora (3600 segons)
 
-                            // Guardar el token y la fecha de expiración en la base de datos
                             guardarToken($email, $token, $expires);
 
-                            // Preparar el cuerpo del correo
                             $resetLink = "http://albamatamoros.cat/vista/vistaCanviContra.php?token=" . $token; // Enlace con el token
                             
                             $text = "

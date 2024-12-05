@@ -1,14 +1,28 @@
 <?php 
     //Crear cookies per recordar les preferencies d'usuari a l'hora de mostrar x personatges per pantalla. i ordenació.
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $search = isset($_POST['search']) ? $_POST['search'] : (isset($_GET['search']) ? $_GET['search'] : "");
+
         if (isset($_POST['select'])) {  
             setcookie("personatgesCookie", $_POST['select'], 0);
-            header("Location: .");
+
+            $redirectUrl = "index.php";
+            if (!empty($search)) {
+                $redirectUrl .= "?search=" . urlencode($search);
+            }
+            header("Location: " . $redirectUrl);
+            exit;
         } 
-    
+
         if (isset($_POST['selectOrdenacio'])) {
             setcookie("ordenacioCookie", $_POST['selectOrdenacio'], 0);
-            header("Location: .");
+
+            $redirectUrl = "index.php";
+            if (!empty($search)) {
+                $redirectUrl .= "?search=" . urlencode($search);
+            }
+            header("Location: " . $redirectUrl);
+            exit;
         }
     }
 
@@ -39,6 +53,7 @@
         }
     </script>
 </head>
+<?php var_dump($_COOKIE['personatgesCookie'])?>
 <nav>
     <!------------------------>
     <!-- BARRA DE NAVEGACIÓ -->
@@ -76,7 +91,9 @@
             </a>
             <div class="dropdown-content">
                 <a href="vista/vistaPerfil.php">Administrar perfil</a>
-                <a href="vista/vistaCanviContra.php">Canviar contrasenya</a>
+                <?php if (!isset($_SESSION["loginAutentificacio"])): ?>
+                    <a href="vista/vistaCanviContra.php">Canviar contrasenya</a>
+                <?php endif; ?>
                 <?php if ($_SESSION["loginAdministrador"] == 1): ?>
                     <a href="vista/vistaAdministrarUsuaris.php">Administrar usuaris</a>
                 <?php endif; ?>
