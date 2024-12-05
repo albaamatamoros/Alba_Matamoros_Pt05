@@ -77,6 +77,7 @@
                             $_SESSION["loginCognom"] = $result["cognoms"];
                             $_SESSION["loginImage"] = $result["imatge"];
                             $_SESSION["loginAdministrador"] = $result["administrador"];
+                            $_SESSION["loginAutentificacio"] = $result["autentificacio"];
                             header("Location: ../index.php");
                         }
                     }

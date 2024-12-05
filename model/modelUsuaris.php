@@ -140,6 +140,41 @@
         }
     }
 
+    //Insertar Usuari per HybridAuth.
+    function insertarNouUsuariHybridAuth($userProfile){
+        try {
+            $email = "No proporcionat";
+            $connexio = connexio();
+            $statement = $connexio->prepare('INSERT INTO usuaris (usuari, correu, autentificacio) VALUES (:usuari, :correu, :autentificacio)');
+            $statement->execute(
+            array(
+            ':usuari' => $userProfile->displayName,
+            ':correu' => $userProfile->email,
+            ':autentificacio' => 'Reddit')
+            );
+        }catch (Exception $e){
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    //Insertar Usuari per HybridAuth.
+    function insertarNouUsuariOAuth($usuari, $email, $nom, $cognom){
+        try {
+            $connexio = connexio();
+            $statement = $connexio->prepare('INSERT INTO usuaris (usuari, nom, cognoms, correu, autentificacio) VALUES (:usuari, :nom, :cognoms, :correu, :autentificacio)');
+            $statement->execute(
+            array(
+            ':usuari' => $usuari,
+            ':correu' => $email,
+            ':nom' => $nom,
+            ':cognoms' => $cognom,
+            ':autentificacio' => 'Google')
+            );
+        }catch (Exception $e){
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
     //********************************************************
     //MODIFICAR
 
@@ -209,10 +244,26 @@
     function iniciSessio($usuari){
         try {
             $connexio = connexio();
-            $statement = $connexio->prepare('SELECT id_usuari, correu, usuari, nom, cognoms, imatge, administrador FROM usuaris WHERE usuari = :usuari');
+            $statement = $connexio->prepare('SELECT id_usuari, correu, usuari, nom, cognoms, imatge, administrador, autentificacio FROM usuaris WHERE usuari = :usuari');
             $statement->execute(
                 array(
                     ':usuari' => $usuari)
+            );
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+    function iniciSessioOAuth($usuari, $email){
+        try {
+            $connexio = connexio();
+            $statement = $connexio->prepare('SELECT id_usuari, correu, usuari, nom, cognoms, imatge, administrador, autentificacio FROM usuaris WHERE usuari = :usuari AND correu = :correu');
+            $statement->execute(
+                array(
+                ':usuari' => $usuari,
+                ':correu' => $email
+                )
             );
             return $statement->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
