@@ -15,7 +15,7 @@
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        if (isset($_SESSION["loginId"])) { header("Location: ../index.php" ); }
+        if (isset($_SESSION["loginId"])) { header("Location: ../vista/errors/vistaError403.php" );}
         require_once "../controlador/controladorErrors.php";
 
         if (isset($_COOKIE['usuariNom']))
@@ -24,6 +24,9 @@
 
         $errors = isset($errors) ? $errors : [];
         $correcte = isset($correcte) ? $correcte : null;
+
+        //GOOGLE
+        require "../lib/OAuth/configOAuth.php";
     ?>
     <nav>
         <!-- INICI y GESTIÓ D'ARTICLES -->
@@ -67,6 +70,11 @@
                 <a href="../vista/vistaRecuperarContrasenya.php">Heu oblidat la contrasenya?</a>
             </div>
         </form>
+        
+        <div>
+            <a href="../controlador/HybridAuthC/callbackReddit.php">Reddit</a>
+            <a href="<?php echo $url; ?>">Google</a>
+        </div>
 
         <!-- CONTROL D'ERRORS -->
         <?php mostrarMissatge($errors, $correcte) ?>

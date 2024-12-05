@@ -8,7 +8,7 @@
     use Hybridauth\Hybridauth;
 
     try {
-        $config = require '../../lib/HybridAuth/configReddit.php'; // Ruta al archivo de configuración
+        $config = require '../../lib/HybridAuth/configReddit.php';
         $hybridauth = new Hybridauth($config);
     
         // Autenticación con Reddit
