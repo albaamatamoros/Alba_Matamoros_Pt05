@@ -11,10 +11,10 @@
         $config = require '../../lib/HybridAuth/configReddit.php';
         $hybridauth = new Hybridauth($config);
     
-        // Autenticación con Reddit
+        // Autentificacio amb reddit
         $adapter = $hybridauth->authenticate('Reddit');
     
-        // Obtener información del perfil del usuario
+        // Obtenir info usuari reddit
         $userProfile = $adapter->getUserProfile();
 
         $result = iniciSessio($userProfile->displayName);

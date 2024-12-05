@@ -253,9 +253,6 @@
                             $_SESSION['caducat'] = 1;
                             header("Location: ../vista/vistaRestablirContra.php");
                         }
-                        // } elseif ($usuariIdToken['correu'] != $_SESSION['emailToken']) {
-                        //     $errors[] = "➤ El correu que a demanat el canvi de contrasenya no coincideix amb el correu del token.";
-                        // }
 
                         $correct = password_verify($novaContrasenya, $usuariIdToken['contrasenya']);
                         var_dump($correct);

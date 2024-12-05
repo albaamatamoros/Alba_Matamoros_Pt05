@@ -10,7 +10,7 @@
                     'id' => ID_REDDIT_LOCALHOST,
                     'secret' => SECRET_REDDIT_LOCALHOST
                 ],
-                'scope' => 'identity' // Solicita solo el alcance necesario
+                'scope' => 'identity'
             ],
         ],
     ];
