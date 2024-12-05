@@ -19,7 +19,18 @@ Aquest projecte és una aplicació web que permet als usuaris autenticar-se util
 ## Raíz
 - **`controlador`**
   - `HybridAuthC`
+    - `callbackReddit.php`
   - `OAuth`
+    - `callbackGoogle.php`
+  - `controladorAdministrarPerfil.php`
+  - `controladorAfegirPersonatge.php`
+  - `controladorAutenticacio.php`
+  - `controladorBaixaUsuari.php`
+  - `controladorEditarPerfil.php`
+  - `controladorLlistarPersonatges.php`
+  - `controladorLogout.php`
+  - `controladorRegistrarUsuari.php`
+  - `controladorVeurePerfil.php`
 - **`estils`**
 - **`lib`**
 - **`model`**
@@ -27,4 +38,8 @@ Aquest projecte és una aplicació web que permet als usuaris autenticar-se util
   - **`errors`**
   - **`imatges`**
     - **`imatgesUsers`**
+- **`inde.php`**
+- **`.htaccess`**
+- **`env.php`**
+- **`.gitingore`**
 
