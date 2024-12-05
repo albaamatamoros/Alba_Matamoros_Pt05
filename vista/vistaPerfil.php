@@ -65,7 +65,8 @@
                     <input type="text" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>">
                 <?php else: ?>
                     <label for="username">Nombre de Usuario</label>
-                    <input type="text" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>" readonly disabled>
+                    <input type="hidden" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>">
+                    <input type="text" id="user" name="user" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>" readonly disabled>
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION["loginNom"]) && $_SESSION["loginNom"] != ""): ?>
