@@ -60,7 +60,7 @@
                 <label for="arxiu">Selecciona un arxiu:</label>
                 <input type="file" name="arxiu" id="arxiu">
 
-                <?php if (!isset($_SESSION["loginAutentificacio"])): ?>
+                <?php if (($_SESSION["loginAutentificacio"]) == ""): ?>
                     <label for="username">Nombre de Usuario</label>
                     <input type="text" id="username" name="username" value="<?php echo isset($_SESSION["loginUsuari"]) ? $_SESSION["loginUsuari"] : ''; ?>">
                 <?php else: ?>
