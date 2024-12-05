@@ -2,11 +2,17 @@
 # Pràctica 05 - Social Authentication & Miscel·lània
 Si vols fer proves amb usuaris ja creats tots tenen el pasword = P@ssw0rd
 
-ALGUNS USUARIS:
+# Taula d'usuaris i contrasenyes
 
-ppan -> P@ssw0rd
-Admin, mjane -> P@ssw0rd
-Admin, amatamoros -> P@ssw0rd
+# Taula d'usuaris i contrasenyes
+
+| **Usuari**      | **Rol**      | **Contrasenya**  |
+|------------------|--------------|------------------|
+| ppan            | Admin       | P@ssw0rd         |
+| mjane           | Usuari       | P@ssw0rd         |
+| amatamoros      | Admin       | P@ssw0rd         |
+| nouusuari1      | Usuari       | P@ssw0rd         |
+| nouusuari2      | Usuari       | P@ssw0rd         |
 
 La temàtica de la meva pàgina és "Personatges de One piece", els usuaris han d'introduir tots els personatges existents actualment, cada usuari fa la seva aportació sense repetir l'usuari inserit per altra persona.
 
